@@ -1,0 +1,456 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Avatars {
+  id String @id
+
+  url      String?
+  filename String?
+  mimetype String? @default("image/jpeg")
+  encoding String? @default("7bit")
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
+  Persons    Persons[]
+
+  @@map("avatars")
+}
+
+model Persons {
+  id          String  @id
+  addressesId String?
+  avatarsId   String?
+
+  firstName String
+  lastName  String
+  bi        String?
+  removed   DateTime?
+
+  phone String?
+  email String? @unique
+
+  avatars Avatars?   @relation(fields: [avatarsId], references: [id])
+  address Addresses? @relation(fields: [addressesId], references: [id])
+
+  created_at DateTime    @default(now())
+  updated_at DateTime    @default(now())
+  users      Users[]
+  customers  Customers[]
+  students   Students[]
+  inCharges  InCharges[]
+
+  @@index([addressesId])
+  @@index([avatarsId])
+  @@map("persons")
+}
+
+model Addresses {
+  id String @id
+
+  location String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  Persons       Persons[]
+  Organizations Organizations[]
+
+  @@map("addresses")
+}
+
+model Customers {
+  id              String @id
+  personsId       String @unique
+  organizationsId String
+
+  username String @unique
+  password String
+
+  level                    String?   @default("EMPLOYEE")
+  verified                 Boolean?  @default(false)
+  acceptTermsAndConditions Boolean?  @default(true)
+  removed                  DateTime?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  persons       Persons       @relation(fields: [personsId], references: [id])
+  organizations Organizations @relation(fields: [organizationsId], references: [id])
+  students      Students[]
+  inCharges     InCharges[]
+
+  @@index([personsId])
+  @@index([organizationsId])
+  @@map("customers")
+}
+
+model Users {
+  id String @id
+
+  personsId String @unique
+
+  username String @unique
+  password String
+
+  level                    String?   @default("EMPLOYEE")
+  verified                 Boolean?  @default(false)
+  acceptTermsAndConditions Boolean?  @default(true)
+  removed                  DateTime?
+
+  persons Persons @relation(fields: [personsId], references: [id])
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@index([personsId])
+  @@map("users")
+}
+
+model UsersToken {
+  id      String @id
+  usersId String
+
+  refresh_token String
+  expires_date  DateTime
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@index([usersId])
+  @@map("usersTokens")
+}
+
+model Logos {
+  id String @id
+
+  url      String?
+  filename String?
+  mimetype String? @default("image/jpeg")
+  encoding String? @default("7bit")
+
+  created_at    DateTime        @default(now())
+  updated_at    DateTime        @default(now())
+  Organizations Organizations[]
+
+  @@map("logos")
+}
+
+enum Instruction {
+  PRIMARY
+  SECONDARY
+  TECHNICAL
+  PUNISHABLE
+  TECHNICAL_END_PUNISHABLE
+}
+
+model Organizations {
+  id           String  @id
+  packagesId   String
+  logosId      String?
+  addressesId  String?
+  contactsId   String?
+  calendarysId String?
+
+  name        String
+  slug        String
+  birth       DateTime?
+  instruction Instruction @default(TECHNICAL)
+  about       String?
+
+  is_active Boolean   @default(false)
+  removed   DateTime?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  addresses                     Addresses?                      @relation(fields: [addressesId], references: [id])
+  logos                         Logos?                          @relation(fields: [logosId], references: [id])
+  contacts                      Contacts?                       @relation(fields: [contactsId], references: [id])
+  customers                     Customers[]
+  courses                       Courses[]
+  rooms                         Rooms[]
+  categories                    Categories[]
+  services                      Services[]
+  inCharges                     InCharges[]
+  students                      Students[]
+  notificationsHasOrganizations NotificationsHasOrganizations[]
+  servicesMonthlys              ServicesMonthlys[]
+  alerts                        Alerts[]
+
+  @@index([addressesId])
+  @@index([contactsId])
+  @@index([logosId])
+  @@index([calendarysId])
+  @@index([packagesId])
+  @@map("organizations")
+}
+
+model Contacts {
+  id String @id
+
+  primaryPhone   String
+  secundaryPhone String?
+  primaryEmail   String
+  secundaryEmail String?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  organizations Organizations[]
+
+  @@map("contacts")
+}
+
+model Courses {
+  id              String @id
+  organizationsId String
+
+  is_active Boolean  @default(false)
+  is_used   Boolean? @default(false)
+
+  name        String
+  description String?
+  removed     DateTime?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  organizations Organizations @relation(fields: [organizationsId], references: [id])
+
+  rooms Rooms[]
+
+  @@index([organizationsId])
+  @@map("courses")
+}
+
+model Rooms {
+  id              String @id
+  organizationsId String
+  coursesId       String
+
+  number        Float
+  group         String
+  level         Float
+  period        String
+  studentsLimit Float?    @default(30)
+  removed       DateTime?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  courses       Courses       @relation(fields: [coursesId], references: [id])
+  organizations Organizations @relation(fields: [organizationsId], references: [id])
+
+  students Students[]
+
+  @@index([organizationsId])
+  @@index([coursesId])
+  @@map("rooms")
+}
+
+model Categories {
+  id              String @id
+  organizationsId String
+
+  name        String
+  description String?
+  removed     DateTime?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  organizations Organizations @relation(fields: [organizationsId], references: [id])
+
+  services Services[]
+
+  @@index([organizationsId])
+  @@map("categories")
+}
+
+model Services {
+  id              String @id
+  organizationsId String
+  categoriesId    String
+
+  name        String
+  price       Float
+  description String?
+  is_active   Boolean?
+  removed     DateTime?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  organizations Organizations @relation(fields: [organizationsId], references: [id])
+  categories    Categories    @relation(fields: [categoriesId], references: [id])
+
+  @@index([organizationsId])
+  @@index([categoriesId])
+  @@map("services")
+}
+
+model ServicesMonthlys {
+  id              String @id @default(uuid())
+  organizationsId String
+
+  service String
+  price   String
+  removed DateTime?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  organizations Organizations @relation(fields: [organizationsId], references: [id])
+
+  @@index([organizationsId])
+  @@map("servicesMonthlys")
+}
+
+model Calendarys {
+  id String @id
+
+  date_start DateTime  @default(now())
+  date_end   DateTime  @default(now())
+  is_active  Boolean   @default(false)
+  removed    DateTime?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@map("calendarys")
+}
+
+model Documents {
+  id String @id
+
+  url      String
+  filename String
+  mimetype String
+  encoding String
+  removed  DateTime
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@map("documents")
+}
+
+model InCharges {
+  id              String  @id
+  organizationsId String
+  personsId       String
+  customersId     String?
+
+  removed DateTime?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  persons       Persons       @relation(fields: [personsId], references: [id])
+  organizations Organizations @relation(fields: [organizationsId], references: [id])
+  customers     Customers?    @relation(fields: [customersId], references: [id])
+
+  StudentsHasInCharges StudentsHasInCharges[]
+
+  @@index([organizationsId])
+  @@index([personsId])
+  @@index([customersId])
+  @@map("inCharges")
+}
+
+model Students {
+  id String @id
+
+  organizationsId String
+  personsId       String
+  customersId     String?
+
+  roomsId String
+  removed DateTime?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  persons       Persons       @relation(fields: [personsId], references: [id])
+  rooms         Rooms         @relation(fields: [roomsId], references: [id])
+  organizations Organizations @relation(fields: [organizationsId], references: [id])
+  customers     Customers?    @relation(fields: [customersId], references: [id])
+
+  StudentsHasInCharges StudentsHasInCharges[]
+
+  @@index([organizationsId])
+  @@index([personsId])
+  @@index([customersId])
+  @@index([roomsId])
+  @@map("students")
+}
+
+model StudentsHasInCharges {
+  id String @id
+
+  studentsId  String
+  inChargesId String
+
+  students  Students  @relation(fields: [studentsId], references: [id])
+  inCharges InCharges @relation(fields: [inChargesId], references: [id])
+
+  @@index([studentsId])
+  @@index([inChargesId])
+  @@map("studentsHasInCharges")
+}
+
+model Notifications {
+  id   String @id
+  type String
+
+  content String
+  readAt  DateTime?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  notificationsHasOrganizations NotificationsHasOrganizations[]
+
+  @@map("notifications")
+}
+
+model NotificationsHasOrganizations {
+  id String @id
+
+  organizationsId String
+  notificationsId String
+
+  organizations Organizations @relation(fields: [organizationsId], references: [id])
+  notifications Notifications @relation(fields: [notificationsId], references: [id])
+
+  @@index([organizationsId])
+  @@index([notificationsId])
+  @@map("notificationsHasOrganizations")
+}
+
+model Alerts {
+  id String @id
+
+  organizationsId String
+
+  title       String
+  description String
+  open        Boolean
+  removed     DateTime?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  organizations Organizations @relation(fields: [organizationsId], references: [id])
+
+  @@map("alerts")
+}

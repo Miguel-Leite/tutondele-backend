@@ -2,7 +2,7 @@
   "name": "tutondele-backend",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "tutondele",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -27,6 +27,7 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/graphql": "^11.0.5",
     "@nestjs/platform-express": "^9.0.0",
+    "@prisma/client": "4.14.0",
     "graphql": "^16.6.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"

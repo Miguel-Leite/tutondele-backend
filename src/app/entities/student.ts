@@ -6,7 +6,7 @@ export interface StudentsProps {
   organizationsId  : string;
 
   personsId        : string;
-  usersId?         : string | null;
+  customersId?         : string | null;
   roomsId          : string;
   removed?         : Date | null;
 
@@ -50,12 +50,12 @@ export class Student {
     return this.props.personsId;
   }
 
-  public set usersId(usersId: string | null | undefined) {
-    this.props.usersId = usersId;
+  public set customersId(customersId: string | null | undefined) {
+    this.props.customersId = customersId;
   }
 
-  public get usersId(): string | null | undefined {
-    return this.props.usersId;
+  public get customersId(): string | null | undefined {
+    return this.props.customersId;
   }
 
   public set roomsId(roomsId: string) {

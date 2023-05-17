@@ -1,18 +1,15 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
-export class StudentModel {
+export class CourseModel {
   @Field(() => ID)
   id!: string;
 
   @Field()
-  personsId!: string;
+  name!: string;
 
-  @Field()
-  roomsId!: string;
-  
-  @Field()
-  customersId!: string;
+  @Field({ nullable: true })
+  description?: string;
 
   @Field({ nullable: true })
   created_at!: Date;

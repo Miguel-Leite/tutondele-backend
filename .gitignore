@@ -1,5 +1,8 @@
-# compiled output
+# Ignorar arquivos .env e .env.prod
 .env
+.env.prod
+
+# compiled output
 /dist
 /node_modules
 

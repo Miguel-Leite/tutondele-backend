@@ -1,15 +1,6 @@
 version: '3'
 
 services:
-  app:
-    build: .
-    command: yarn start:dev
-    container_name: tutondele-backend
-    ports:
-      - 3000:3000
-    volumes:
-      - .:/usr/app/tutondele-backend
-      - /usr/app/node_modules
   database:
     image: 'bitnami/postgresql'
     ports:

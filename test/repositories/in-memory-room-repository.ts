@@ -2,11 +2,11 @@ import { Room } from "@app/entities/room";
 import { RoomRepository } from "@app/repositories/room-repository";
 import { InMemoryDatabaseRepository } from "./in-memory-database-repository";
 
-export class InMemoryRoomRepository extends InMemoryDatabaseRepository implements RoomRepository {
+export class InMemoryRoomRepository extends RoomRepository {
   public rooms: Room[] = [];
 
   async findById(id: string): Promise<Room | null> {
-    const room = this.databse.rooms.find((item) => item.id === id);
+    const room = this.rooms.find((item) => item.id === id);
 
     if (!room) {
       return null;

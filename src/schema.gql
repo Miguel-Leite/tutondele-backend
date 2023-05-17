@@ -2,6 +2,225 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type UserModel {
+  id: ID!
+  personsId: String!
+  username: String!
+  password: String!
+  level: String!
+  verified: Boolean!
+  acceptTermsAndConditions: Boolean!
+  removed: DateTime
+  created_at: DateTime
+  updated_at: DateTime
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type CustomerModel {
+  id: ID!
+  personsId: String!
+  username: String!
+  password: String!
+  level: String!
+  verified: Boolean!
+  acceptTermsAndConditions: Boolean!
+  removed: DateTime
+  created_at: DateTime
+  updated_at: DateTime
+}
+
+type OrganizationModel {
+  id: ID!
+  packagesId: String!
+  logosId: String
+  addressesId: String!
+  contactsId: String!
+  calendarysId: String
+  name: String!
+  slug: String!
+  birth: DateTime
+  instruction: Instruction!
+  about: String
+  is_active: Boolean!
+  removed: DateTime
+  created_at: DateTime
+  updated_at: DateTime
+}
+
+"""Type of teaching at the institution"""
+enum Instruction {
+  PRIMARY
+  SECONDARY
+  TECHNICAL
+  PUNISHABLE
+  TECHNICAL_END_PUNISHABLE
+}
+
+type StudentModel {
+  id: ID!
+  personsId: String!
+  roomsId: String!
+  customersId: String!
+  created_at: DateTime
+  updated_at: DateTime
+}
+
+type IdentityModel {
+  number: String!
+  name: String!
+  nif: String!
+  date_of_birth: String!
+  gender: String!
+  nationality: String!
+  father_full_name: String!
+  mother_full_name: String!
+  marital_status: String!
+  issuance_date: String!
+  issuance_location: String!
+}
+
+type RoomModel {
+  id: ID!
+  coursesId: String!
+  number: Float!
+  group: String!
+  level: Float!
+  period: String!
+  studentsLimit: Float!
+}
+
+type CourseModel {
+  id: ID!
+  name: String!
+  description: String
+  created_at: DateTime
+  updated_at: DateTime
+}
+
 type Query {
-  students: String!
+  identity(bi: String!): IdentityModel!
+  users: [UserModel!]!
+  meCustomer: CustomerModel!
+  customer(id: String!): CustomerModel!
+  customers: [CustomerModel!]!
+  organizations: [OrganizationModel!]!
+  students: [StudentModel!]!
+  rooms: [RoomModel!]!
+  room(id: String!): RoomModel!
+  courses: [CourseModel!]!
+  course(id: String!): CourseModel!
+}
+
+type Mutation {
+  userCreate(data: CreateUserInput!): UserModel!
+  authenticationCustomer(data: AuthCustomerInput!): String!
+  addCustomer(data: CreateCustomerInput!): CustomerModel!
+  editCustomer(data: UpdateCustomerInput!): CustomerModel!
+  deleteCustomer(id: String!): CustomerModel!
+  recoverCustomer(id: String!): CustomerModel!
+  organizationCreate(data: CreateOrganizationInput!): OrganizationModel!
+  addStudent(data: CreateStudentInput!): StudentModel!
+  addRoom(data: CreateRoomInput!): RoomModel!
+  editRoom(data: UpdateRoomInput!): RoomModel!
+  deleteRoom(id: String!): RoomModel!
+  addCourse(data: CreateCourseInput!): CourseModel!
+  editCourse(data: UpdateCourseInput!): CourseModel!
+  deleteCourse(id: String!): CourseModel!
+}
+
+input CreateUserInput {
+  firstName: String!
+  lastName: String!
+  bi: String
+  phone: String
+  email: String!
+  password: String!
+  level: String = "EMPLOYEE"
+}
+
+input AuthCustomerInput {
+  email: String!
+  password: String!
+}
+
+input CreateCustomerInput {
+  firstName: String!
+  lastName: String!
+  bi: String
+  phone: String
+  email: String!
+  password: String!
+  level: String = "EMPLOYEE"
+}
+
+input UpdateCustomerInput {
+  id: ID!
+  username: String
+  firstName: String
+  lastName: String
+  bi: String
+  phone: String
+  email: String
+  level: String = "EMPLOYEE"
+}
+
+input CreateOrganizationInput {
+  packagesId: String!
+  name: String!
+  slug: String!
+  birth: DateTime
+  instruction: Instruction!
+  about: String
+  primaryPhone: String!
+  secundaryPhone: String
+  primaryEmail: String
+  secundaryEmail: String
+  location: String!
+  firstName: String!
+  lastName: String!
+  phone: String!
+  email: String!
+}
+
+input CreateStudentInput {
+  roomsId: String!
+  firstName: String!
+  lastName: String!
+  bi: String!
+  phone: String
+  email: String
+}
+
+input CreateRoomInput {
+  coursesId: String!
+  number: Float!
+  group: String!
+  level: Float!
+  period: String!
+  studentsLimit: Float
+}
+
+input UpdateRoomInput {
+  id: ID!
+  coursesId: String!
+  number: Float!
+  group: String!
+  level: Float!
+  period: String!
+  studentsLimit: Float
+}
+
+input CreateCourseInput {
+  name: String
+  description: String
+}
+
+input UpdateCourseInput {
+  id: ID!
+  name: String
+  description: String
 }

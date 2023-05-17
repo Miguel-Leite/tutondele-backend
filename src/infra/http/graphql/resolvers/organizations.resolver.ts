@@ -1,8 +1,8 @@
-import { CreateOrganization } from '@app/use-cases/create-organization';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { OrganizationModel } from '../dtos/models/organization-model';
 import { CreateOrganizationInput } from '../dtos/inputs/create-organization-input';
-import { GetAllOrganizations } from '@app/use-cases/get-all-organizations';
+import { GetAllOrganizations } from '@app/use-cases/organizations/get-all-organizations';
+import { CreateOrganization } from '@app/use-cases/organizations/create-organization';
 
 @Resolver(() => OrganizationModel)
 export class OrganizationsResolver {

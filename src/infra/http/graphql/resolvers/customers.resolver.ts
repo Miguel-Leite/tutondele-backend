@@ -1,19 +1,19 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UserModel } from '../dtos/models/user-model';
-import { GetAllCustomers } from '@app/use-cases/get-all-customers';
-import { CreateCustomer } from '@app/use-cases/create-customer';
 import { CustomerModel } from '../dtos/models/customer-model';
 import { CreateCustomerInput } from '../dtos/inputs/create-customer-input';
 import { AuthCustomerInput } from '../dtos/inputs/auth-customer-input';
-import { AuthCustomerService } from '@infra/http/auth/auth-customer.service';
 import { AuthGuard } from '@infra/http/auth/auth.guard';
-import { CurrentUser, IAuthUser } from '@infra/http/auth/current-user';
-import { GetByIdCustomer } from '@app/use-cases/get-by-id-customer';
-import { UpdateCustomer } from '@app/use-cases/update-customer';
+import { GetAllCustomers } from '@app/use-cases/customers/get-all-customers';
+import { GetByIdCustomer } from '@app/use-cases/customers/get-by-id-customer';
+import { CreateCustomer } from '@app/use-cases/customers/create-customer';
+import { UpdateCustomer } from '@app/use-cases/customers/update-customer';
+import { RemoveCustomer } from '@app/use-cases/customers/remove-customer';
+import { RetrieveCustomer } from '@app/use-cases/customers/retrieve-customer';
+import { AuthCustomerService } from '@infra/http/auth/customer/auth-customer.service';
+import { CurrentCustomer, IAuthCustomer } from '@infra/http/auth/customer/current-customer';
 import { UpdateCustomerInput } from '../dtos/inputs/update-customer-input';
-import { RemoveCustomer } from '@app/use-cases/remove-customer';
-import { RetrieveCustomer } from '@app/use-cases/retrieve-customer';
 
 @Resolver(() => UserModel)
 export class CustomersResolver {
@@ -30,7 +30,7 @@ export class CustomersResolver {
   @UseGuards(AuthGuard)
   @Query(() => CustomerModel)
   async meCustomer(
-    @CurrentUser() user: IAuthUser,
+    @CurrentCustomer() user: IAuthCustomer,
   ) {
     const { customer } = await this.getByIdCustomer.execute(user.sub);
     return customer;
@@ -46,7 +46,7 @@ export class CustomersResolver {
   @UseGuards(AuthGuard)
   @Query(() => [CustomerModel])
   async customers(
-    @CurrentUser() user: IAuthUser,
+    @CurrentCustomer() user: IAuthCustomer,
   ) {
     const { customers } = await this.getAllCustomers.execute(user.organizationsId);
     return customers;
@@ -59,7 +59,7 @@ export class CustomersResolver {
 
   @UseGuards(AuthGuard)
   @Mutation(() => CustomerModel)
-  async addCustomer(@Args('data') data: CreateCustomerInput,@CurrentUser() user: IAuthUser,) {
+  async addCustomer(@Args('data') data: CreateCustomerInput,@CurrentCustomer() user: IAuthCustomer,) {
     const { customer } = await this.createCustomer.execute({
       organizationsId: user.organizationsId,
       ...data
@@ -69,7 +69,7 @@ export class CustomersResolver {
 
   @UseGuards(AuthGuard)
   @Mutation(() => CustomerModel)
-  async editCustomer(@Args('data') data: UpdateCustomerInput,@CurrentUser() user: IAuthUser,) {
+  async editCustomer(@Args('data') data: UpdateCustomerInput, @CurrentCustomer() user: IAuthCustomer,) {
     const { customer } = await this.updateCustomer.execute(data);
     return customer;
   }

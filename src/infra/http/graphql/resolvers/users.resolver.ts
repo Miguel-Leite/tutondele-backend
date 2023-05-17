@@ -1,8 +1,8 @@
-import { CreateUser } from '@app/use-cases/create-user';
-import { GetAllUsers } from '@app/use-cases/get-all-users';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreateUserInput } from '../dtos/inputs/create-user-input';
 import { UserModel } from '../dtos/models/user-model';
+import { GetAllUsers } from '@app/use-cases/users/get-all-users';
+import { CreateUser } from '@app/use-cases/users/create-user';
 
 @Resolver(() => UserModel)
 export class UsersResolver {

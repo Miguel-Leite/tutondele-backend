@@ -3,6 +3,9 @@ import { Student } from "@app/entities/student";
 import { StudentRepository } from "@app/repositories/student-repository";
 import { RoomRepository } from "@app/repositories/room-repository";
 import { RoomNotFound } from "../rooms/errors/room-not-found";
+import { Person } from "@app/entities/person";
+import { Bi } from "@app/entities/bi";
+import { PersonRepository } from "@app/repositories/person-repository";
 // import { KafkaService } from "@infra/messaging/kafka.service";
 
 export interface CreateStudentRequest {
@@ -23,6 +26,7 @@ interface CreateStudentResponse {
 export class CreateStudent {
   constructor(
     private studentRepository: StudentRepository,
+    private personRepository: PersonRepository,
     private roomRepository: RoomRepository,
     // private kafka: KafkaService,
   ) {}
@@ -38,9 +42,16 @@ export class CreateStudent {
         phone,
       } = request;
 
+    const person = new Person({
+      firstName,
+      lastName,
+      bi: new Bi(bi),
+      email,
+      phone,
+    });
     const student = new Student({
       organizationsId,
-      personsId: '',
+      personsId: person.id,
       roomsId,
     });
 
@@ -50,17 +61,11 @@ export class CreateStudent {
       throw new RoomNotFound();
     }
 
-    await this.studentRepository.create(student);
-
-    // this.kafka.emit('schools.new-person', {
-    //   organizationsId,
-    //   firstName,
-    //   lastName,
-    //   bi,
-    //   email,
-    //   phone,
-    // })
-
+    Promise.all([
+      await this.personRepository.create(person),
+      await this.studentRepository.create(student),
+    ]);
+    
     return {
       student,
     }

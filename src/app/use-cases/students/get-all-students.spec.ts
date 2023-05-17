@@ -1,6 +1,7 @@
 import { InMemoryStudentRepository } from "@test/repositories/in-memory-student-repository";
 import { CreateStudent } from "./create-student";
 import { GetAllStudents } from "./get-all-students";
+import { InMemoryPersonRepository } from "@test/repositories/in-memory-person-repository";
 
 describe('Get all students use case', () => {
   it('should be able to get all students', async () => {
@@ -15,7 +16,8 @@ describe('Get all students use case', () => {
     };
     
     const studentRepository = new InMemoryStudentRepository();
-    const createStudent = new CreateStudent(studentRepository, mockRoomRepository);
+    const personRepository = new InMemoryPersonRepository();
+    const createStudent = new CreateStudent(studentRepository, personRepository, mockRoomRepository);
     const getAllStudents = new GetAllStudents(studentRepository);
 
     await createStudent.execute({

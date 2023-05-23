@@ -12,7 +12,7 @@ import { OrganizationNotFound } from "./errors/organization-not-found";
 
 interface UpdateOrganizationRequest {
   id                      : string;
-  packagesId              : string;
+  licensesId              : string;
   name                    : string;
   slug                    : string;
   instruction             : Instruction;
@@ -40,7 +40,7 @@ export class UpdateOrganization {
     const {
       id,
       name,
-      packagesId,
+      licensesId,
       slug,
       is_active,
       instruction,
@@ -71,7 +71,7 @@ export class UpdateOrganization {
 
     const organization = new Organization({
       name,
-      packagesId,
+      licensesId,
       slug,
       is_active,
       instruction,

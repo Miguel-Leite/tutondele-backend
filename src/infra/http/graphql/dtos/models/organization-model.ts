@@ -13,7 +13,7 @@ export class OrganizationModel {
   id!: string;
 
   @Field()
-  packagesId!: string;
+  licensesId!: string;
 
   @Field({ nullable: true })
   logosId?                : string;

@@ -9,7 +9,7 @@ registerEnumType(Instruction, {
 @InputType()
 export class CreateOrganizationInput {
   @Field()
-  packagesId!: string;
+  licensesId!: string;
 
   @Field()
   name!                   : string;

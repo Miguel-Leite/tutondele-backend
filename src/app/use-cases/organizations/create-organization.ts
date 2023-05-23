@@ -18,7 +18,7 @@ import { OrganizationEmailExists } from "./errors/organization-email-exits";
 import { OrganizationPhoneExists } from "./errors/organization-phone-exists";
 
 interface CreateOrganizationRequest {
-  packagesId              : string;
+  licensesId              : string;
   name                    : string;
   slug                    : string;
   instruction             : Instruction;
@@ -57,7 +57,7 @@ export class CreateOrganization {
       email,
       
       name,
-      packagesId,
+      licensesId,
       slug,
       is_active,
       instruction,
@@ -111,7 +111,7 @@ export class CreateOrganization {
 
     const organization = new Organization({
       name,
-      packagesId,
+      licensesId,
       slug,
       is_active,
       instruction,

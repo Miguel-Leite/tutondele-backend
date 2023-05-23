@@ -4,7 +4,7 @@ import { Replace } from "@helpers/Replace";
 import { Instruction } from '@prisma/client';
 
 export interface OrganizationProps {
-  packagesId              : string;
+  licensesId              : string;
   logosId?                : string | null;
   addressesId             : string;
   contactsId              : string;
@@ -53,12 +53,12 @@ export class Organization {
     return this.props.logosId;
   }
 
-  public set packagesId(packagesId: string) {
-    this.props.packagesId = packagesId;
+  public set licensesId(licensesId: string) {
+    this.props.licensesId = licensesId;
   }
 
-  public get packagesId(): string{
-    return this.props.packagesId;
+  public get licensesId(): string{
+    return this.props.licensesId;
   }
 
   public set addressesId(addressesId: string) {

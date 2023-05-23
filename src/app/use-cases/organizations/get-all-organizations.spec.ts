@@ -37,7 +37,7 @@ describe('Get All Organizations use case', () => {
       slug: "IPPA",
       primaryEmail: "person@example.com",
       primaryPhone: "123-456-78",
-      packagesId: "fe4d04a6-9e2b-4ec8-affd-ba11a8cb2a61"
+      licensesId: "fe4d04a6-9e2b-4ec8-affd-ba11a8cb2a61"
     });
 
     const { organizations } = await getAllOrganizations.execute();

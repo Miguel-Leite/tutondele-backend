@@ -12,7 +12,7 @@ export class UpdateOrganizationInput {
   id!: string;
 
   @Field({ nullable: true })
-  packagesId!: string;
+  licensesId!: string;
 
   @Field({ nullable: true })
   name!: string;

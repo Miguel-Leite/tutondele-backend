@@ -157,8 +157,8 @@ model Organizations {
   id           String  @id
   packagesId   String
   logosId      String?
-  addressesId  String?
-  contactsId   String?
+  addressesId  String
+  contactsId   String
   calendarysId String?
 
   name        String
@@ -173,9 +173,9 @@ model Organizations {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  addresses                     Addresses?                      @relation(fields: [addressesId], references: [id])
+  addresses                     Addresses                      @relation(fields: [addressesId], references: [id])
   logos                         Logos?                          @relation(fields: [logosId], references: [id])
-  contacts                      Contacts?                       @relation(fields: [contactsId], references: [id])
+  contacts                      Contacts                       @relation(fields: [contactsId], references: [id])
   customers                     Customers[]
   courses                       Courses[]
   rooms                         Rooms[]

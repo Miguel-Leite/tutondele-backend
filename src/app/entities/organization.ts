@@ -6,8 +6,8 @@ import { Instruction } from '@prisma/client';
 export interface OrganizationProps {
   packagesId              : string;
   logosId?                : string | null;
-  addressesId             : string | null;
-  contactsId?: string | null;
+  addressesId             : string;
+  contactsId              : string;
   calendarysId?           : string | null;
 
   name                    : string;
@@ -61,19 +61,19 @@ export class Organization {
     return this.props.packagesId;
   }
 
-  public set addressesId(addressesId: string | null) {
+  public set addressesId(addressesId: string) {
     this.props.addressesId = addressesId;
   }
 
-  public get addressesId(): string | null {
+  public get addressesId(): string {
     return this.props.addressesId;
   }
 
-  public set contactsId(contactsId: string | null | undefined) {
+  public set contactsId(contactsId: string) {
     this.props.contactsId = contactsId;
   }
 
-  public get contactsId(): string | null | undefined {
+  public get contactsId(): string {
     return this.props.contactsId;
   }
 

@@ -6,7 +6,7 @@ describe('Student', () => {
       organizationsId: 'example-organization-id',
       personsId: 'example-persons-id',
       roomsId: 'example-rooms-id',
-      usersId: 'example-users-id'
+      customersId: 'example-customers-id',
     });
     expect(student).toBeTruthy();
   });

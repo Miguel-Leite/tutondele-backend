@@ -70,6 +70,10 @@ export class Student {
     this.props.removed = null;
   }
 
+  public recovery() {
+    this.props.removed = null;
+  }
+
   public remove() {
     this.props.removed = new Date();
   }

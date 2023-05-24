@@ -11,7 +11,7 @@ export class StudentModel {
   @Field()
   roomsId!: string;
   
-  @Field()
+  @Field({ nullable: true })
   customersId!: string;
 
   @Field({ nullable: true })

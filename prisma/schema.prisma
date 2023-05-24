@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-1.1.x"]
 }
 
@@ -155,7 +155,7 @@ enum Instruction {
 
 model Organizations {
   id           String  @id
-  packagesId   String
+  licensesId   String
   logosId      String?
   addressesId  String
   contactsId   String
@@ -173,9 +173,10 @@ model Organizations {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  addresses                     Addresses                      @relation(fields: [addressesId], references: [id])
+  addresses                     Addresses                       @relation(fields: [addressesId], references: [id])
   logos                         Logos?                          @relation(fields: [logosId], references: [id])
-  contacts                      Contacts                       @relation(fields: [contactsId], references: [id])
+  contacts                      Contacts                        @relation(fields: [contactsId], references: [id])
+  licenses                      Licenses                        @relation(fields: [licensesId], references: [id])
   customers                     Customers[]
   courses                       Courses[]
   rooms                         Rooms[]
@@ -191,7 +192,7 @@ model Organizations {
   @@index([contactsId])
   @@index([logosId])
   @@index([calendarysId])
-  @@index([packagesId])
+  @@index([licensesId])
   @@map("organizations")
 }
 
@@ -454,4 +455,52 @@ model Alerts {
   organizations Organizations @relation(fields: [organizationsId], references: [id])
 
   @@map("alerts")
+}
+
+model Packages {
+  id String @id @default(uuid())
+
+  name     String @unique
+  price    Float
+  students Int
+
+  admins Int
+  users  Int
+
+  services Int
+
+  removed DateTime?
+
+  notification_email Boolean @default(true)
+  notification_sms   Boolean @default(false)
+
+  manual_payment   Boolean @default(true)
+  realtime_payment Boolean @default(false)
+
+  security Boolean @default(true)
+
+  created_at DateTime   @default(now())
+  updated_at DateTime   @default(now())
+  licenses   Licenses[]
+
+  @@map("packages")
+}
+
+model Licenses {
+  id        String @id @default(uuid())
+  packageId String
+
+  code      String @unique
+
+  startDate DateTime
+  endDate   DateTime
+  removed   DateTime?
+
+  package    Packages @relation(fields: [packageId], references: [id])
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  organizations Organizations[]
+
+  @@map("licenses")
 }

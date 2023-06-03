@@ -15,7 +15,6 @@ export class GetByIdRoom {
 
   async execute(id: string): Promise<GetByIdRoomResponse> {
     const room = await this.roomRepository.findById(id);
-    console.log(room)
     return {
       room
     }

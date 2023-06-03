@@ -26,6 +26,9 @@ import { UpdateCourse } from '@app/use-cases/courses/update-course';
 import { RemoveCourse } from '@app/use-cases/courses/remove-course';
 import { GetAllCourses } from '@app/use-cases/courses/get-all-courses';
 import { GetByIdCourse } from '@app/use-cases/courses/get-by-id-course';
+import { UpdateStudent } from '@app/use-cases/students/update-student';
+import { GetByIdStudent } from '@app/use-cases/students/get-by-id-student';
+import { RemoveStudent } from '@app/use-cases/students/remove-student';
 
 import { DatabaseModule } from '@infra/database/database.module';
 
@@ -37,16 +40,23 @@ import { OrganizationsResolver } from './graphql/resolvers/organizations.resolve
 import { UsersResolver } from './graphql/resolvers/users.resolver';
 import { StudentsResolver } from './graphql/resolvers/students.resolver';
 import { IdentityResolver } from './graphql/resolvers/identity.resolver';
+import { CoursesResolver } from './graphql/resolvers/courses.resolver';
 import { RoomsResolver } from './graphql/resolvers/rooms.resolver';
 
 import { IdentityService } from './identity.service';
-import { CoursesResolver } from './graphql/resolvers/courses.resolver';
+import { ScansResolver } from './graphql/resolvers/scans.resolver';
+import { UpdateOrganization } from '@app/use-cases/organizations/update-organization';
+import { ActivateOrganization } from '@app/use-cases/organizations/activate-organization';
+import { DeactivateOrganization } from '@app/use-cases/organizations/deactivate-organization';
+import { RemoveOrganization } from '@app/use-cases/organizations/remove-organization';
+import { RestModule } from './rest/rest.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     DatabaseModule,
     AuthModule,
+    RestModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: resolve(process.cwd(), 'src/schema.gql'),
@@ -69,10 +79,17 @@ import { CoursesResolver } from './graphql/resolvers/courses.resolver';
     StudentsResolver,
     GetAllStudents,
     CreateStudent,
+    UpdateStudent,
+    GetByIdStudent,
+    RemoveStudent,
     AuthCustomerService,
     GetByIdCustomer,
     GetAllOrganizations,
     CreateOrganization,
+    UpdateOrganization,
+    ActivateOrganization,
+    DeactivateOrganization,
+    RemoveOrganization,
     UpdateCustomer,
     RemoveCustomer,
     RetrieveCustomer,

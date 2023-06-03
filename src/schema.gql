@@ -35,7 +35,7 @@ type CustomerModel {
 
 type OrganizationModel {
   id: ID!
-  packagesId: String!
+  licensesId: String!
   logosId: String
   addressesId: String!
   contactsId: String!
@@ -64,7 +64,7 @@ type StudentModel {
   id: ID!
   personsId: String!
   roomsId: String!
-  customersId: String!
+  customersId: String
   created_at: DateTime
   updated_at: DateTime
 }
@@ -83,6 +83,14 @@ type IdentityModel {
   issuance_location: String!
 }
 
+type CourseModel {
+  id: ID!
+  name: String!
+  description: String
+  created_at: DateTime
+  updated_at: DateTime
+}
+
 type RoomModel {
   id: ID!
   coursesId: String!
@@ -91,14 +99,6 @@ type RoomModel {
   level: Float!
   period: String!
   studentsLimit: Float!
-}
-
-type CourseModel {
-  id: ID!
-  name: String!
-  description: String
-  created_at: DateTime
-  updated_at: DateTime
 }
 
 type Query {
@@ -122,7 +122,11 @@ type Mutation {
   editCustomer(data: UpdateCustomerInput!): CustomerModel!
   deleteCustomer(id: String!): CustomerModel!
   recoverCustomer(id: String!): CustomerModel!
-  organizationCreate(data: CreateOrganizationInput!): OrganizationModel!
+  addOrganization(data: CreateOrganizationInput!): OrganizationModel!
+  editOrganization(data: UpdateOrganizationInput!): OrganizationModel!
+  enableOrganization(id: String!): OrganizationModel!
+  disableOrganization(id: String!): OrganizationModel!
+  deleteOrganization(id: String!): OrganizationModel!
   addStudent(data: CreateStudentInput!): StudentModel!
   addRoom(data: CreateRoomInput!): RoomModel!
   editRoom(data: UpdateRoomInput!): RoomModel!
@@ -169,7 +173,7 @@ input UpdateCustomerInput {
 }
 
 input CreateOrganizationInput {
-  packagesId: String!
+  licensesId: String!
   name: String!
   slug: String!
   birth: DateTime
@@ -184,6 +188,25 @@ input CreateOrganizationInput {
   lastName: String!
   phone: String!
   email: String!
+}
+
+input UpdateOrganizationInput {
+  id: ID!
+  licensesId: String
+  name: String
+  slug: String
+  birth: DateTime
+  instruction: Instruction!
+  about: String
+  primaryPhone: String
+  secundaryPhone: String
+  primaryEmail: String
+  secundaryEmail: String
+  location: String
+  firstName: String
+  lastName: String
+  phone: String
+  email: String
 }
 
 input CreateStudentInput {

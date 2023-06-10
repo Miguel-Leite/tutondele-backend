@@ -59,6 +59,12 @@ import { GetByIdPackage } from '@app/use-cases/packages/get-by-id-package';
 import { CreatePackage } from '@app/use-cases/packages/create-package';
 import { UpdatePackage } from '@app/use-cases/packages/update-package';
 import { RemovePackage } from '@app/use-cases/packages/remove-package';
+import { LicensesResolver } from './graphql/resolvers/Licenses.resolver';
+import { GetAllLicenses } from '@app/use-cases/licenses/get-all-licenses';
+import { GetByIdLicense } from '@app/use-cases/licenses/get-by-id-license';
+import { CreateLicense } from '@app/use-cases/licenses/create-license';
+import { UpdateLicense } from '@app/use-cases/licenses/update-license';
+import { RemoveLicense } from '@app/use-cases/licenses/remove-license';
 
 @Module({
   imports: [
@@ -81,6 +87,13 @@ import { RemovePackage } from '@app/use-cases/packages/remove-package';
     CreatePackage,
     UpdatePackage,
     RemovePackage,
+    // Licenses
+    LicensesResolver,
+    GetAllLicenses,
+    GetByIdLicense,
+    CreateLicense,
+    UpdateLicense,
+    RemoveLicense,
     // Users
     UsersResolver,
     GetAllUsers,

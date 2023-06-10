@@ -1,8 +1,9 @@
-import { Injectable } from "@nestjs/common";
-import { License } from "@app/entities/license";
-import { LicenseRepository } from "@app/repositories/license-repository";
-import { PackageRepository } from "@app/repositories/package-repository";
-import { PackageNotFound } from "../packages/errors/package-not-found";
+import { Injectable } from '@nestjs/common';
+import { License } from '@app/entities/license';
+import { LicenseRepository } from '@app/repositories/license-repository';
+import { PackageRepository } from '@app/repositories/package-repository';
+import { PackageNotFound } from '../packages/errors/package-not-found';
+import { generateLicenseCode } from '@helpers/generate-license-code';
 
 interface CreateLicenseRequest {
   packagesId: string;
@@ -16,31 +17,33 @@ interface CreateLicenseResponse {
 
 @Injectable()
 export class CreateLicense {
-  constructor (
+  constructor(
     private licenseRepository: LicenseRepository,
-    private packageRepository: PackageRepository,  
+    private packageRepository: PackageRepository,
   ) {}
 
   async execute(request: CreateLicenseRequest): Promise<CreateLicenseResponse> {
     const { packagesId, endDate, startDate } = request;
 
     const license = new License({
+      code: generateLicenseCode(10),
       startDate,
       endDate,
       packagesId,
     });
 
-    const packageExists = await this.packageRepository.findById(license.packagesId);
+    const packageExists = await this.packageRepository.findById(
+      license.packagesId,
+    );
 
     if (!packageExists) {
       throw new PackageNotFound();
     }
-    
 
     await this.licenseRepository.create(license);
 
     return {
-      license
-    }
+      license,
+    };
   }
 }

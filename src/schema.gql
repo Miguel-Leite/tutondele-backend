@@ -118,10 +118,22 @@ type PackageModel {
   updated_at: DateTime!
 }
 
+type LicenseModel {
+  id: ID!
+  packagesId: String!
+  code: String!
+  startDate: DateTime!
+  endDate: DateTime!
+  created_at: DateTime
+  updated_at: DateTime
+}
+
 type Query {
   identity(bi: String!): IdentityModel!
   packages: [PackageModel!]!
   package(id: String!): PackageModel!
+  licenses: [LicenseModel!]!
+  license(id: String!): LicenseModel!
   users: [UserModel!]!
   meCustomer: CustomerModel!
   customer(id: String!): CustomerModel!
@@ -137,7 +149,10 @@ type Query {
 type Mutation {
   addPackage(data: CreatePackageInput!): PackageModel!
   editPackage(data: UpdatePackageInput!): PackageModel!
-  deleteCategory(id: String!): PackageModel!
+  deletePackage(id: String!): PackageModel!
+  addLicense(data: CreateLicenseInput!): LicenseModel!
+  editLicense(data: UpdateLicenseInput!): LicenseModel!
+  deleteLicense(id: String!): LicenseModel!
   userCreate(data: CreateUserInput!): UserModel!
   authenticationCustomer(data: AuthCustomerInput!): String!
   addCustomer(data: CreateCustomerInput!): CustomerModel!
@@ -189,6 +204,19 @@ input UpdatePackageInput {
   realtime_payment: Boolean!
   created_at: DateTime!
   updated_at: DateTime!
+}
+
+input CreateLicenseInput {
+  packagesId: String!
+  startDate: DateTime!
+  endDate: DateTime!
+}
+
+input UpdateLicenseInput {
+  id: ID!
+  packagesId: String
+  startDate: DateTime
+  endDate: DateTime
 }
 
 input CreateUserInput {

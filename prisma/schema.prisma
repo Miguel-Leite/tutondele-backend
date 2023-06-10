@@ -488,7 +488,7 @@ model Packages {
 
 model Licenses {
   id        String @id @default(uuid())
-  packageId String
+  packagesId String
 
   code      String @unique
 
@@ -496,7 +496,7 @@ model Licenses {
   endDate   DateTime
   removed   DateTime?
 
-  package    Packages @relation(fields: [packageId], references: [id])
+  package    Packages @relation(fields: [packagesId], references: [id])
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 

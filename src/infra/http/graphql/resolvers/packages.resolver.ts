@@ -47,7 +47,7 @@ export class PackagesResolver {
   }
 
   @Mutation(() => PackageModel)
-  async deleteCategory(@Args('id') id: string) {
+  async deletePackage(@Args('id') id: string) {
     const response = await this.removePackage.execute(id);
 
     return response.package;

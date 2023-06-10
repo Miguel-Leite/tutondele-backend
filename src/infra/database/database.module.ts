@@ -22,6 +22,8 @@ import { StudentRepository } from '@app/repositories/student-repository';
 import { PrismaStudentRepository } from './prisma/repositories/prisma-student-repository';
 import { PackageRepository } from '@app/repositories/package-repository';
 import { PrismaPackageRepository } from './prisma/repositories/prisma-package-repository';
+import { LicenseRepository } from '@app/repositories/license-repository';
+import { PrismaLicenseRepository } from './prisma/repositories/prisma-license-repository';
 
 @Module({
   providers: [
@@ -74,6 +76,10 @@ import { PrismaPackageRepository } from './prisma/repositories/prisma-package-re
       provide: PackageRepository,
       useClass: PrismaPackageRepository,
     },
+    {
+      provide: LicenseRepository,
+      useClass: PrismaLicenseRepository,
+    },
   ],
   exports: [
     UserRepository,
@@ -87,6 +93,7 @@ import { PrismaPackageRepository } from './prisma/repositories/prisma-package-re
     InChargeRepository,
     CourseRepository,
     PackageRepository,
+    LicenseRepository,
   ],
 })
 export class DatabaseModule {}

@@ -1,7 +1,7 @@
-import { InMemoryCourseRepository } from "@test/repositories/in-memory-course-repository";
-import { makeCourse } from "@test/factories/course-factory";
-import { CreateCourse } from "./create-course";
-import { CourseAlreadyExists } from "./errors/course-already-exists";
+import { InMemoryCourseRepository } from '@test/repositories/in-memory-course-repository';
+import { makeCourse } from '@test/factories/course-factory';
+import { CreateCourse } from './create-course';
+import { CourseAlreadyExists } from './errors/course-already-exists';
 
 describe('Create course use case', () => {
   it('should be able to create a course', async () => {
@@ -20,6 +20,8 @@ describe('Create course use case', () => {
 
     await createCourse.execute(makeCourse());
 
-    expect(async () => await createCourse.execute(makeCourse())).rejects.toThrow(CourseAlreadyExists);
+    expect(
+      async () => await createCourse.execute(makeCourse()),
+    ).rejects.toThrow(CourseAlreadyExists);
   });
 });

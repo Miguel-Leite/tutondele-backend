@@ -1,12 +1,12 @@
-import { Course } from "@app/entities/course";
-import { CourseRepository } from "@app/repositories/course-repository";
-import { Injectable } from "@nestjs/common";
-import { CourseAlreadyExists } from "./errors/course-already-exists";
+import { Course } from '@app/entities/course';
+import { CourseRepository } from '@app/repositories/course-repository';
+import { Injectable } from '@nestjs/common';
+import { CourseAlreadyExists } from './errors/course-already-exists';
 
 interface CreateCourseRequest {
   organizationsId: string;
-  name           : string;
-  description?   : string | null;
+  name: string;
+  description?: string | null;
 }
 
 interface CreateCourseResponse {
@@ -15,9 +15,7 @@ interface CreateCourseResponse {
 
 @Injectable()
 export class CreateCourse {
-  constructor(
-    private courseRepository: CourseRepository,
-  ) {}
+  constructor(private courseRepository: CourseRepository) {}
 
   async execute(request: CreateCourseRequest): Promise<CreateCourseResponse> {
     const { name, description, organizationsId } = request;
@@ -28,16 +26,18 @@ export class CreateCourse {
       organizationsId,
     });
 
-    const courseAlreadyExists = await this.courseRepository.findByName(course.name);
+    const courseAlreadyExists = await this.courseRepository.findByName(
+      course.name,
+    );
 
     if (courseAlreadyExists) {
       throw new CourseAlreadyExists();
     }
-    
+
     await this.courseRepository.create(course);
 
     return {
       course,
-    }
+    };
   }
 }

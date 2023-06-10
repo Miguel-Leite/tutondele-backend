@@ -1,8 +1,8 @@
-import { Package } from "@app/entities/package";
+import { Package } from '@app/entities/package';
 
 export abstract class PackageRepository {
   abstract findById(id: string): Promise<Package | null>;
-  abstract findByName(id: string): Promise<Package | null>;
+  abstract findByName(name: string): Promise<Package | null>;
   abstract findAll(): Promise<Package[] | null>;
   abstract totalStudents(id: string): Promise<number | null>;
   abstract totalServices(id: string): Promise<number | null>;

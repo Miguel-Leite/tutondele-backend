@@ -20,6 +20,8 @@ import { RoomRepository } from '@app/repositories/room-repository';
 import { PrismaRoomRepository } from './prisma/repositories/prisma-room-repository';
 import { StudentRepository } from '@app/repositories/student-repository';
 import { PrismaStudentRepository } from './prisma/repositories/prisma-student-repository';
+import { PackageRepository } from '@app/repositories/package-repository';
+import { PrismaPackageRepository } from './prisma/repositories/prisma-package-repository';
 
 @Module({
   providers: [
@@ -68,10 +70,14 @@ import { PrismaStudentRepository } from './prisma/repositories/prisma-student-re
       provide: OrganizationRepository,
       useClass: PrismaOrganizationRepository,
     },
+    {
+      provide: PackageRepository,
+      useClass: PrismaPackageRepository,
+    },
   ],
   exports: [
-    UserRepository, 
-    PersonRepository, 
+    UserRepository,
+    PersonRepository,
     CustomerRepository,
     AddressRepository,
     ContactRepository,
@@ -80,6 +86,7 @@ import { PrismaStudentRepository } from './prisma/repositories/prisma-student-re
     RoomRepository,
     InChargeRepository,
     CourseRepository,
+    PackageRepository,
   ],
 })
 export class DatabaseModule {}

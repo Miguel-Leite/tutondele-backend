@@ -53,6 +53,12 @@ import { GetByIdCategory } from '@app/use-cases/categories/get-by-id-category';
 import { CreateCategory } from '@app/use-cases/categories/create-category';
 import { UpdateCategory } from '@app/use-cases/categories/update-category';
 import { RemoveCategory } from '@app/use-cases/categories/remove-category';
+import { PackagesResolver } from './graphql/resolvers/packages.resolver';
+import { GetAllPackages } from '@app/use-cases/packages/get-all-packages';
+import { GetByIdPackage } from '@app/use-cases/packages/get-by-id-package';
+import { CreatePackage } from '@app/use-cases/packages/create-package';
+import { UpdatePackage } from '@app/use-cases/packages/update-package';
+import { RemovePackage } from '@app/use-cases/packages/remove-package';
 
 @Module({
   imports: [
@@ -68,6 +74,13 @@ import { RemoveCategory } from '@app/use-cases/categories/remove-category';
     // Identity
     IdentityResolver,
     IdentityService,
+    // Packages
+    PackagesResolver,
+    GetAllPackages,
+    GetByIdPackage,
+    CreatePackage,
+    UpdatePackage,
+    RemovePackage,
     // Users
     UsersResolver,
     GetAllUsers,

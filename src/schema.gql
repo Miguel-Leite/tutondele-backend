@@ -101,8 +101,27 @@ type RoomModel {
   studentsLimit: Float!
 }
 
+type PackageModel {
+  id: ID!
+  name: String!
+  price: Float!
+  students: Float!
+  admins: Float!
+  users: Float!
+  services: Float!
+  removed: DateTime!
+  notification_email: Boolean!
+  notification_sms: Boolean!
+  manual_payment: Boolean!
+  realtime_payment: Boolean!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
 type Query {
   identity(bi: String!): IdentityModel!
+  packages: [PackageModel!]!
+  package(id: String!): PackageModel!
   users: [UserModel!]!
   meCustomer: CustomerModel!
   customer(id: String!): CustomerModel!
@@ -116,6 +135,9 @@ type Query {
 }
 
 type Mutation {
+  addPackage(data: CreatePackageInput!): PackageModel!
+  editPackage(data: UpdatePackageInput!): PackageModel!
+  deleteCategory(id: String!): PackageModel!
   userCreate(data: CreateUserInput!): UserModel!
   authenticationCustomer(data: AuthCustomerInput!): String!
   addCustomer(data: CreateCustomerInput!): CustomerModel!
@@ -134,6 +156,39 @@ type Mutation {
   addCourse(data: CreateCourseInput!): CourseModel!
   editCourse(data: UpdateCourseInput!): CourseModel!
   deleteCourse(id: String!): CourseModel!
+}
+
+input CreatePackageInput {
+  name: String!
+  price: Float!
+  students: Float!
+  admins: Float!
+  users: Float!
+  services: Float!
+  removed: DateTime!
+  notification_email: Boolean!
+  notification_sms: Boolean!
+  manual_payment: Boolean!
+  realtime_payment: Boolean!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+input UpdatePackageInput {
+  id: ID!
+  name: String!
+  price: Float!
+  students: Float!
+  admins: Float!
+  users: Float!
+  services: Float!
+  removed: DateTime!
+  notification_email: Boolean!
+  notification_sms: Boolean!
+  manual_payment: Boolean!
+  realtime_payment: Boolean!
+  created_at: DateTime!
+  updated_at: DateTime!
 }
 
 input CreateUserInput {

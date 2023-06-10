@@ -1,16 +1,16 @@
 import { randomUUID } from 'node:crypto';
 
-import { Replace } from "@helpers/Replace";
+import { Replace } from '@helpers/Replace';
 
 export interface CategoriesProps {
   organizationsId: string;
 
-  name           : string;
-  description?   : string;
-  removed?       : Date | null;
+  name: string;
+  description?: string;
+  removed?: Date | null;
 
-  created_at     : Date;
-  updated_at     : Date;
+  created_at: Date;
+  updated_at: Date;
 }
 
 export class Category {
@@ -18,7 +18,7 @@ export class Category {
   private props: CategoriesProps;
 
   constructor(
-    props: Replace<CategoriesProps, { created_at?: Date, updated_at?: Date }>,
+    props: Replace<CategoriesProps, { created_at?: Date; updated_at?: Date }>,
     id?: string,
   ) {
     this._id = id ?? randomUUID();
@@ -46,7 +46,7 @@ export class Category {
   }
 
   public get name(): string {
-    return this.props.name;
+    return this.props.name.toLowerCase();
   }
 
   public set description(description: string | undefined) {

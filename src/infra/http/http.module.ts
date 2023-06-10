@@ -44,19 +44,21 @@ import { CoursesResolver } from './graphql/resolvers/courses.resolver';
 import { RoomsResolver } from './graphql/resolvers/rooms.resolver';
 
 import { IdentityService } from './identity.service';
-import { ScansResolver } from './graphql/resolvers/scans.resolver';
 import { UpdateOrganization } from '@app/use-cases/organizations/update-organization';
 import { ActivateOrganization } from '@app/use-cases/organizations/activate-organization';
 import { DeactivateOrganization } from '@app/use-cases/organizations/deactivate-organization';
 import { RemoveOrganization } from '@app/use-cases/organizations/remove-organization';
-import { RestModule } from './rest/rest.module';
+import { GetAllCategories } from '@app/use-cases/categories/get-all-categories';
+import { GetByIdCategory } from '@app/use-cases/categories/get-by-id-category';
+import { CreateCategory } from '@app/use-cases/categories/create-category';
+import { UpdateCategory } from '@app/use-cases/categories/update-category';
+import { RemoveCategory } from '@app/use-cases/categories/remove-category';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     DatabaseModule,
     AuthModule,
-    RestModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: resolve(process.cwd(), 'src/schema.gql'),
@@ -67,12 +69,12 @@ import { RestModule } from './rest/rest.module';
     IdentityResolver,
     IdentityService,
     // Users
-    UsersResolver, 
-    GetAllUsers, 
-    CreateUser, 
+    UsersResolver,
+    GetAllUsers,
+    CreateUser,
     // Customers
-    CustomersResolver, 
-    GetAllCustomers, 
+    CustomersResolver,
+    GetAllCustomers,
     CreateCustomer,
     // Organizations
     OrganizationsResolver,
@@ -105,6 +107,11 @@ import { RestModule } from './rest/rest.module';
     RemoveCourse,
     GetAllCourses,
     GetByIdCourse,
+    GetAllCategories,
+    GetByIdCategory,
+    CreateCategory,
+    UpdateCategory,
+    RemoveCategory,
   ],
 })
 export class HttpModule {}

@@ -1,10 +1,10 @@
-import { generateLicenseCode } from '@helpers/generate-license-code';
+import { generateCode } from '@helpers/generate-code';
 import { License } from './license';
 
 describe('License', () => {
   it('should be able to create a license', () => {
     const license = new License({
-      code: generateLicenseCode(10),
+      code: generateCode(10),
       startDate: new Date(),
       endDate: new Date(),
       packagesId: 'example-package-id',

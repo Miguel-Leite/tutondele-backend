@@ -3,7 +3,7 @@ import { License } from '@app/entities/license';
 import { LicenseRepository } from '@app/repositories/license-repository';
 import { PackageRepository } from '@app/repositories/package-repository';
 import { PackageNotFound } from '../packages/errors/package-not-found';
-import { generateLicenseCode } from '@helpers/generate-license-code';
+import { generateCode } from '@helpers/generate-code';
 
 interface CreateLicenseRequest {
   packagesId: string;
@@ -26,7 +26,7 @@ export class CreateLicense {
     const { packagesId, endDate, startDate } = request;
 
     const license = new License({
-      code: generateLicenseCode(10),
+      code: generateCode(10),
       startDate,
       endDate,
       packagesId,

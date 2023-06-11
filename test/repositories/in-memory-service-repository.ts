@@ -1,5 +1,5 @@
-import { Service } from "@app/entities/service";
-import { ServiceRepository } from "@app/repositories/service-repository";
+import { Service } from '@app/entities/service';
+import { ServiceRepository } from '@app/repositories/service-repository';
 
 export class InMemoryServiceRepository implements ServiceRepository {
   public services: Service[] = [];
@@ -13,8 +13,19 @@ export class InMemoryServiceRepository implements ServiceRepository {
 
     return service;
   }
+  async findByName(name: string): Promise<Service | null> {
+    const service = this.services.find((item) => item.name === name);
+
+    if (!service) {
+      return null;
+    }
+
+    return service;
+  }
   async findAll(organizationsId: string): Promise<Service[] | null> {
-    const services = this.services.filter((item) => item.organizationsId === organizationsId);
+    const services = this.services.filter(
+      (item) => item.organizationsId === organizationsId,
+    );
 
     if (!services) {
       return [];
@@ -26,6 +37,12 @@ export class InMemoryServiceRepository implements ServiceRepository {
     this.services.push(service);
   }
   async save(service: Service): Promise<void> {
-    this.services.push(service);
+    const ServiceIndex = this.services.findIndex(
+      (item) => item.id === service.id,
+    );
+
+    if (ServiceIndex >= 0) {
+      this.services[ServiceIndex] = service;
+    }
   }
 }

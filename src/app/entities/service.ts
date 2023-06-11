@@ -1,18 +1,17 @@
 import { randomUUID } from 'node:crypto';
 
-import { Replace } from "@helpers/Replace";
+import { Replace } from '@helpers/Replace';
 
 export interface ServicesProps {
-  organizationsId  : string;
+  organizationsId: string;
 
-  name             : string;
-  price            : number;
-  description?     : string;
-  is_active?       : boolean;
-  removed?         : Date | null;
+  name: string;
+  price: number;
+  description?: string | null;
+  removed?: Date | null;
 
-  created_at       : Date;
-  updated_at       : Date;
+  created_at: Date;
+  updated_at: Date;
 }
 
 export class Service {
@@ -20,7 +19,7 @@ export class Service {
   private props: ServicesProps;
 
   constructor(
-    props: Replace<ServicesProps, { created_at?: Date, updated_at?: Date }>,
+    props: Replace<ServicesProps, { created_at?: Date; updated_at?: Date }>,
     id?: string,
   ) {
     this._id = id ?? randomUUID();
@@ -43,18 +42,6 @@ export class Service {
     return this.props.organizationsId;
   }
 
-  public active() {
-    this.props.is_active = true;
-  }
-
-  public disable() {
-    this.props.is_active = false;
-  }
-
-  public get is_active(): boolean | undefined {
-    return this.props.is_active;
-  }
-
   public set price(price: number) {
     this.props.price = price;
   }
@@ -68,14 +55,14 @@ export class Service {
   }
 
   public get name(): string {
-    return this.props.name;
+    return this.props.name.toLowerCase();
   }
 
-  public set description(description: string | undefined) {
+  public set description(description: string | null | undefined) {
     this.props.description = description;
   }
 
-  public get description(): string | undefined {
+  public get description(): string | null | undefined {
     return this.props.description;
   }
 

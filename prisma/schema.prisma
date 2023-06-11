@@ -187,6 +187,7 @@ model Organizations {
   notificationsHasOrganizations NotificationsHasOrganizations[]
   servicesMonthlys              ServicesMonthlys[]
   alerts                        Alerts[]
+  paymentServicesMonthlys       PaymentServicesMonthlys[]
 
   @@index([addressesId])
   @@index([contactsId])
@@ -272,7 +273,7 @@ model Categories {
 
   organizations Organizations @relation(fields: [organizationsId], references: [id])
 
-  services Services[]
+  // services Services[]
 
   @@index([organizationsId])
   @@map("categories")
@@ -281,22 +282,21 @@ model Categories {
 model Services {
   id              String @id
   organizationsId String
-  categoriesId    String
+  // categoriesId    String
 
   name        String
   price       Float
   description String?
-  is_active   Boolean?
   removed     DateTime?
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
   organizations Organizations @relation(fields: [organizationsId], references: [id])
-  categories    Categories    @relation(fields: [categoriesId], references: [id])
+  // categories    Categories    @relation(fields: [categoriesId], references: [id])
 
   @@index([organizationsId])
-  @@index([categoriesId])
+  // @@index([categoriesId])
   @@map("services")
 }
 
@@ -305,13 +305,14 @@ model ServicesMonthlys {
   organizationsId String
 
   service String
-  price   String
+  price   Float
   removed DateTime?
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  organizations Organizations @relation(fields: [organizationsId], references: [id])
+  organizations           Organizations             @relation(fields: [organizationsId], references: [id])
+  paymentServicesMonthlys PaymentServicesMonthlys[]
 
   @@index([organizationsId])
   @@map("servicesMonthlys")
@@ -387,7 +388,8 @@ model Students {
   organizations Organizations @relation(fields: [organizationsId], references: [id])
   customers     Customers?    @relation(fields: [customersId], references: [id])
 
-  StudentsHasInCharges StudentsHasInCharges[]
+  studentsHasInCharges    StudentsHasInCharges[]
+  PaymentServicesMonthlys PaymentServicesMonthlys[]
 
   @@index([organizationsId])
   @@index([personsId])
@@ -487,20 +489,44 @@ model Packages {
 }
 
 model Licenses {
-  id        String @id @default(uuid())
+  id         String @id @default(uuid())
   packagesId String
 
-  code      String @unique
+  code String @unique
 
   startDate DateTime
   endDate   DateTime
   removed   DateTime?
 
-  package    Packages @relation(fields: [packagesId], references: [id])
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
+
+  package Packages @relation(fields: [packagesId], references: [id])
 
   organizations Organizations[]
 
   @@map("licenses")
+}
+
+model PaymentServicesMonthlys {
+  id                 String @id @default(uuid())
+  servicesMonthlysId String
+  studentsId         String
+  organizationsId    String
+
+  code  String
+  value Float
+
+  reference      String
+  iban           String
+  account_number String
+
+  removed DateTime?
+
+  servicesMonthlys ServicesMonthlys @relation(fields: [servicesMonthlysId], references: [id])
+  students         Students         @relation(fields: [studentsId], references: [id])
+  organizations    Organizations    @relation(fields: [organizationsId], references: [id])
+
+  created_at       DateTime         @default(now())
+  updated_at       DateTime         @default(now())
 }

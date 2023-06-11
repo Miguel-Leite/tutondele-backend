@@ -1,6 +1,6 @@
 import { createHash, randomBytes } from 'crypto';
 
-export function generateLicenseCode(length: number): string {
+export function generateCode(length: number): string {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let code = '';
 

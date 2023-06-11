@@ -65,6 +65,24 @@ import { GetByIdLicense } from '@app/use-cases/licenses/get-by-id-license';
 import { CreateLicense } from '@app/use-cases/licenses/create-license';
 import { UpdateLicense } from '@app/use-cases/licenses/update-license';
 import { RemoveLicense } from '@app/use-cases/licenses/remove-license';
+import { ServicesResolver } from './graphql/resolvers/services.resolver';
+import { GetAllServices } from '@app/use-cases/services/get-all-services';
+import { GetByIdService } from '@app/use-cases/services/get-by-id-service';
+import { CreateService } from '@app/use-cases/services/create-service';
+import { UpdateService } from '@app/use-cases/services/update-service';
+import { RemoveService } from '@app/use-cases/services/remove-service';
+import { ServiceMonthlysResolver } from './graphql/resolvers/service-monthlys.resolver';
+import { GetAllServiceMonthlys } from '@app/use-cases/serviceMonthlys/get-all-service-monthlys';
+import { GetByIdServiceMonthly } from '@app/use-cases/serviceMonthlys/get-by-id-service-monthly';
+import { CreateServiceMonthly } from '@app/use-cases/serviceMonthlys/create-service-monthly';
+import { UpdateServiceMonthly } from '@app/use-cases/serviceMonthlys/update-service-monthly';
+import { RemoveServiceMonthly } from '@app/use-cases/serviceMonthlys/remove-service-monthly';
+import { PaymentServiceMonthlysResolver } from './graphql/resolvers/payment-service-monthlys.resolver';
+import { GetAllPaymentsServicesMonthlys } from '@app/use-cases/paymentServicesMonthlys/get-all-payments-services-monthlys';
+import { GetByIdPaymentServiceMonthly } from '@app/use-cases/paymentServicesMonthlys/get-by-id-payment-service-monthly';
+import { CreatePaymentServiceMonthly } from '@app/use-cases/paymentServicesMonthlys/create-payment-service-monthly';
+import { UpdatePaymentServiceMonthly } from '@app/use-cases/paymentServicesMonthlys/update-payment-service-monthly';
+import { RemovePaymentServiceMonthly } from '@app/use-cases/paymentServicesMonthlys/remove-payment-service-monthly';
 
 @Module({
   imports: [
@@ -138,6 +156,24 @@ import { RemoveLicense } from '@app/use-cases/licenses/remove-license';
     CreateCategory,
     UpdateCategory,
     RemoveCategory,
+    ServicesResolver,
+    GetAllServices,
+    GetByIdService,
+    CreateService,
+    UpdateService,
+    RemoveService,
+    ServiceMonthlysResolver,
+    GetAllServiceMonthlys,
+    GetByIdServiceMonthly,
+    CreateServiceMonthly,
+    UpdateServiceMonthly,
+    RemoveServiceMonthly,
+    PaymentServiceMonthlysResolver,
+    GetAllPaymentsServicesMonthlys,
+    GetByIdPaymentServiceMonthly,
+    CreatePaymentServiceMonthly,
+    UpdatePaymentServiceMonthly,
+    RemovePaymentServiceMonthly,
   ],
 })
 export class HttpModule {}

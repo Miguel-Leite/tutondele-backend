@@ -24,6 +24,12 @@ import { PackageRepository } from '@app/repositories/package-repository';
 import { PrismaPackageRepository } from './prisma/repositories/prisma-package-repository';
 import { LicenseRepository } from '@app/repositories/license-repository';
 import { PrismaLicenseRepository } from './prisma/repositories/prisma-license-repository';
+import { ServiceRepository } from '@app/repositories/service-repository';
+import { PrismaServiceRepository } from './prisma/repositories/prisma-service-repository';
+import { ServiceMonthlyRepository } from '@app/repositories/service-monthly-repository';
+import { PrismaServiceMonthlyRepository } from './prisma/repositories/prisma-service-monthly-repository';
+import { PaymentServiceMonthlyRepository } from '@app/repositories/payment-service-monthly-repository';
+import { PrismaPaymentServiceMonthlyRepository } from './prisma/repositories/prisma-payment-service-monthly-repositoy';
 
 @Module({
   providers: [
@@ -80,6 +86,18 @@ import { PrismaLicenseRepository } from './prisma/repositories/prisma-license-re
       provide: LicenseRepository,
       useClass: PrismaLicenseRepository,
     },
+    {
+      provide: ServiceRepository,
+      useClass: PrismaServiceRepository,
+    },
+    {
+      provide: ServiceMonthlyRepository,
+      useClass: PrismaServiceMonthlyRepository,
+    },
+    {
+      provide: PaymentServiceMonthlyRepository,
+      useClass: PrismaPaymentServiceMonthlyRepository,
+    },
   ],
   exports: [
     UserRepository,
@@ -94,6 +112,9 @@ import { PrismaLicenseRepository } from './prisma/repositories/prisma-license-re
     CourseRepository,
     PackageRepository,
     LicenseRepository,
+    ServiceRepository,
+    ServiceMonthlyRepository,
+    PaymentServiceMonthlyRepository,
   ],
 })
 export class DatabaseModule {}

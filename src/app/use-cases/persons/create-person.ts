@@ -33,7 +33,7 @@ export class CreatePerson {
       lastName,
       email,
       phone,
-      bi: new Bi(bi),
+      bi,
     });
 
     await this.personRepository.create(person);

@@ -1,6 +1,6 @@
-import { Injectable } from "@nestjs/common";
-import { License } from "@app/entities/license";
-import { LicenseRepository } from "@app/repositories/license-repository";
+import { Injectable } from '@nestjs/common';
+import { License } from '@app/entities/license';
+import { LicenseRepository } from '@app/repositories/license-repository';
 
 interface GetAllLicensesResponse {
   licenses: License[] | null;
@@ -8,12 +8,13 @@ interface GetAllLicensesResponse {
 
 @Injectable()
 export class GetAllLicenses {
-  constructor (private licenseRepository: LicenseRepository) {}
+  constructor(private licenseRepository: LicenseRepository) {}
 
   async execute(): Promise<GetAllLicensesResponse> {
     const licenses = await this.licenseRepository.findAll();
+    console.log(licenses);
     return {
-      licenses
+      licenses,
     };
   }
 }

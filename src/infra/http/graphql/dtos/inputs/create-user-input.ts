@@ -17,9 +17,6 @@ export class CreateUserInput {
   @Field()
   email!: string;
 
-  @Field()
-  password!: string;
-
-  @Field({ nullable: true, defaultValue: 'EMPLOYEE' })
+  @Field({ nullable: true, defaultValue: 'MASTER' })
   level!: string;
 }

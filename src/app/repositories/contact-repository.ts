@@ -1,6 +1,7 @@
-import { Contact } from "@app/entities/contact";
+import { Contact } from '@app/entities/contact';
 
 export abstract class ContactRepository {
+  abstract findById(id?: string): Promise<Contact | null>;
   abstract findByPrimaryEmail(email?: string): Promise<Contact | null>;
   abstract findBySecundaryEmail(email?: string): Promise<Contact | null>;
   abstract findByPrimaryPhone(phone?: string): Promise<Contact | null>;

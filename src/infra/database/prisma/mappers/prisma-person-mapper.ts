@@ -10,11 +10,12 @@ export class PrismaPersonMapper {
       lastName: person.lastName,
       addressesId: person.addressesId,
       avatarsId: person.avatarsId,
-      bi: person.bi?.value,
+      bi: person.bi,
       email: person.email,
       phone: person.phone,
       removed: person.removed,
       created_at: person.created_at,
+      updated_at: person.updated_at,
     };
   }
 
@@ -25,7 +26,7 @@ export class PrismaPersonMapper {
         lastName: raw.lastName,
         addressesId: raw.addressesId,
         avatarsId: raw.avatarsId,
-        bi: new Bi(raw.bi),
+        bi: raw.bi,
         email: raw.email,
         phone: raw.phone,
         removed: raw.removed,

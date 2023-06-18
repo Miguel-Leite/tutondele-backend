@@ -9,7 +9,7 @@ export class PaymentServiceMonthlyModel {
   servicesMonthlysId!: string;
 
   @Field()
-  organizationsId!: string;
+  studentsId!: string;
 
   @Field()
   iban!: string;
@@ -18,7 +18,10 @@ export class PaymentServiceMonthlyModel {
   account_number!: string;
 
   @Field()
-  price!: number;
+  reference!: string;
+
+  @Field()
+  value!: number;
 
   @Field({ nullable: true })
   created_at!: Date;

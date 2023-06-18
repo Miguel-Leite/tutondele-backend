@@ -8,7 +8,7 @@ export interface PersonProps {
   avatarsId?: string | null;
   firstName: string;
   lastName: string;
-  bi?: Bi | null;
+  bi?: string | null;
   removed?: Date | null;
   phone?: string | null;
   email?: string | null;
@@ -70,11 +70,11 @@ export class Person {
     return this.props.lastName;
   }
 
-  public set bi(bi: Bi | null | undefined) {
+  public set bi(bi: string | null | undefined) {
     this.props.bi = bi;
   }
 
-  public get bi(): Bi | null | undefined {
+  public get bi(): string | null | undefined {
     return this.props.bi;
   }
 

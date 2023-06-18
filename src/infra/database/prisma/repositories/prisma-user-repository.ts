@@ -1,6 +1,8 @@
+import { Injectable } from '@nestjs/common';
+
 import { User } from '@app/entities/user';
 import { UserRepository } from '@app/repositories/user-repository';
-import { Injectable } from '@nestjs/common';
+
 import { PrismaUserMapper } from '../mappers/prisma-user-mapper';
 import { PrismaService } from '../prisma.service';
 
@@ -23,7 +25,7 @@ export class PrismaUserRepository implements UserRepository {
       where: {
         persons: {
           email,
-        }
+        },
       },
     });
 

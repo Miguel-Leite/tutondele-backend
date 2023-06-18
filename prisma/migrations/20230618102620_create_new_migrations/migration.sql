@@ -182,11 +182,9 @@ CREATE TABLE "categories" (
 CREATE TABLE "services" (
     "id" TEXT NOT NULL,
     "organizationsId" TEXT NOT NULL,
-    "categoriesId" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
     "description" TEXT,
-    "is_active" BOOLEAN,
     "removed" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -199,7 +197,7 @@ CREATE TABLE "servicesMonthlys" (
     "id" TEXT NOT NULL,
     "organizationsId" TEXT NOT NULL,
     "service" TEXT NOT NULL,
-    "price" TEXT NOT NULL,
+    "price" DOUBLE PRECISION NOT NULL,
     "removed" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -329,7 +327,7 @@ CREATE TABLE "packages" (
 -- CreateTable
 CREATE TABLE "licenses" (
     "id" TEXT NOT NULL,
-    "packageId" TEXT NOT NULL,
+    "packagesId" TEXT NOT NULL,
     "code" TEXT NOT NULL,
     "startDate" TIMESTAMP(3) NOT NULL,
     "endDate" TIMESTAMP(3) NOT NULL,
@@ -338,6 +336,24 @@ CREATE TABLE "licenses" (
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "licenses_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "PaymentServicesMonthlys" (
+    "id" TEXT NOT NULL,
+    "servicesMonthlysId" TEXT NOT NULL,
+    "studentsId" TEXT NOT NULL,
+    "organizationsId" TEXT NOT NULL,
+    "code" TEXT NOT NULL,
+    "value" DOUBLE PRECISION NOT NULL,
+    "reference" TEXT NOT NULL,
+    "iban" TEXT NOT NULL,
+    "account_number" TEXT NOT NULL,
+    "removed" TIMESTAMP(3),
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "PaymentServicesMonthlys_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -402,9 +418,6 @@ CREATE INDEX "categories_organizationsId_idx" ON "categories"("organizationsId")
 
 -- CreateIndex
 CREATE INDEX "services_organizationsId_idx" ON "services"("organizationsId");
-
--- CreateIndex
-CREATE INDEX "services_categoriesId_idx" ON "services"("categoriesId");
 
 -- CreateIndex
 CREATE INDEX "servicesMonthlys_organizationsId_idx" ON "servicesMonthlys"("organizationsId");
@@ -491,9 +504,6 @@ ALTER TABLE "categories" ADD CONSTRAINT "categories_organizationsId_fkey" FOREIG
 ALTER TABLE "services" ADD CONSTRAINT "services_organizationsId_fkey" FOREIGN KEY ("organizationsId") REFERENCES "organizations"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "services" ADD CONSTRAINT "services_categoriesId_fkey" FOREIGN KEY ("categoriesId") REFERENCES "categories"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "servicesMonthlys" ADD CONSTRAINT "servicesMonthlys_organizationsId_fkey" FOREIGN KEY ("organizationsId") REFERENCES "organizations"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -533,4 +543,13 @@ ALTER TABLE "notificationsHasOrganizations" ADD CONSTRAINT "notificationsHasOrga
 ALTER TABLE "alerts" ADD CONSTRAINT "alerts_organizationsId_fkey" FOREIGN KEY ("organizationsId") REFERENCES "organizations"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "licenses" ADD CONSTRAINT "licenses_packageId_fkey" FOREIGN KEY ("packageId") REFERENCES "packages"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "licenses" ADD CONSTRAINT "licenses_packagesId_fkey" FOREIGN KEY ("packagesId") REFERENCES "packages"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PaymentServicesMonthlys" ADD CONSTRAINT "PaymentServicesMonthlys_servicesMonthlysId_fkey" FOREIGN KEY ("servicesMonthlysId") REFERENCES "servicesMonthlys"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PaymentServicesMonthlys" ADD CONSTRAINT "PaymentServicesMonthlys_studentsId_fkey" FOREIGN KEY ("studentsId") REFERENCES "students"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PaymentServicesMonthlys" ADD CONSTRAINT "PaymentServicesMonthlys_organizationsId_fkey" FOREIGN KEY ("organizationsId") REFERENCES "organizations"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

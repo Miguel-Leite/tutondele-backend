@@ -1,21 +1,21 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
-export class AddressModel {
+export class ContactModel {
   @Field(() => ID)
   id!: string;
 
   @Field()
-  primaryPhone!            : string;
-  
+  primaryPhone!: string;
+
   @Field({ nullable: true })
-  secundaryPhone?         : string;
-  
+  secundaryPhone?: string;
+
   @Field()
-  primaryEmail!            : string;
-  
+  primaryEmail!: string;
+
   @Field({ nullable: true })
-  secundaryEmail?         : string;
+  secundaryEmail?: string;
 
   @Field({ nullable: true })
   created_at!: Date;

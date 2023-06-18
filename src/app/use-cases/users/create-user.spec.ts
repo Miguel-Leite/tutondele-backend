@@ -11,7 +11,6 @@ describe('Create User use case', () => {
     const { user } = await createUser.execute({
       firstName: 'John',
       lastName: 'Doe',
-      password: 'password',
       phone: '+244944995020',
       email: 'johndoe@gmail.com',
       level: 'ADMIN',

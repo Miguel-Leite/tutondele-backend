@@ -1,25 +1,29 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { CourseModel } from './course-model';
 
-@ObjectType()
+@ObjectType('RoomModel')
 export class RoomModel {
   @Field(() => ID)
-  id!              : string;
+  id!: string;
 
   @Field()
-  coursesId!       : string;
+  coursesId!: string;
 
   @Field()
-  number!          : number;
-  
+  number!: number;
+
   @Field()
-  group!           : string;
-  
+  group!: string;
+
   @Field()
-  level!           : number
-  
+  level!: number;
+
   @Field()
-  period!          : string;
-  
+  period!: string;
+
   @Field()
-  studentsLimit?   : number; 
+  studentsLimit?: number;
+
+  @Field(() => CourseModel)
+  course!: CourseModel;
 }

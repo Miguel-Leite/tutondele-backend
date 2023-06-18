@@ -1,6 +1,9 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { PersonModel } from './person-model';
+import { RoomModel } from './room-model';
+import { CustomerModel } from './customer-model';
 
-@ObjectType()
+@ObjectType('StudentModel')
 export class StudentModel {
   @Field(() => ID)
   id!: string;
@@ -10,7 +13,7 @@ export class StudentModel {
 
   @Field()
   roomsId!: string;
-  
+
   @Field({ nullable: true })
   customersId!: string;
 
@@ -19,4 +22,13 @@ export class StudentModel {
 
   @Field({ nullable: true })
   updated_at!: Date;
+
+  @Field(() => PersonModel)
+  person!: PersonModel;
+
+  @Field(() => RoomModel)
+  room!: RoomModel;
+
+  @Field(() => CustomerModel)
+  account!: CustomerModel;
 }

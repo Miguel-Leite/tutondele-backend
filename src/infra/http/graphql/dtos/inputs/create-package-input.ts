@@ -20,26 +20,18 @@ export class CreatePackageInput {
   @Field()
   services!: number;
 
-  @Field()
-  removed?: Date;
-
-  @Field()
+  @Field({ defaultValue: true })
   notification_email!: boolean;
 
-  @Field()
+  @Field({ defaultValue: false })
   notification_sms!: boolean;
 
-  @Field()
+  @Field({ defaultValue: true })
   manual_payment!: boolean;
 
-  @Field()
+  @Field({ defaultValue: false })
   realtime_payment!: boolean;
 
+  @Field({ defaultValue: true })
   security!: boolean;
-
-  @Field()
-  created_at!: Date;
-
-  @Field()
-  updated_at!: Date;
 }

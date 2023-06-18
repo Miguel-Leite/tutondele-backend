@@ -12,9 +12,6 @@ export class UserModel {
   username!: string;
 
   @Field()
-  password!: string;
-
-  @Field()
   level!: string;
 
   @Field({ defaultValue: false })

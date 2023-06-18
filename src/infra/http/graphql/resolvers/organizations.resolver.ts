@@ -1,4 +1,11 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 
 import { GetAllOrganizations } from '@app/use-cases/organizations/get-all-organizations';
 import { CreateOrganization } from '@app/use-cases/organizations/create-organization';
@@ -10,6 +17,8 @@ import { DeactivateOrganization } from '@app/use-cases/organizations/deactivate-
 import { OrganizationModel } from '../dtos/models/organization-model';
 import { UpdateOrganizationInput } from '../dtos/inputs/update-organization-input';
 import { CreateOrganizationInput } from '../dtos/inputs/create-organization-input';
+import { GetByIdContact } from '@app/use-cases/organizations/get-by-id-contact';
+import { ContactModel } from '../dtos/models/contact-model';
 
 @Resolver(() => OrganizationModel)
 export class OrganizationsResolver {
@@ -20,6 +29,7 @@ export class OrganizationsResolver {
     private removeOrganization: RemoveOrganization,
     private activateOrganization: ActivateOrganization,
     private deactivateOrganization: DeactivateOrganization,
+    private getByIdContact: GetByIdContact,
   ) {}
   @Query(() => [OrganizationModel])
   async organizations() {
@@ -55,5 +65,13 @@ export class OrganizationsResolver {
   async deleteOrganization(@Args('id') id: string) {
     const { organization } = await this.removeOrganization.execute(id);
     return organization;
+  }
+
+  @ResolveField(() => ContactModel)
+  async contacts(@Parent() orgganization: OrganizationModel) {
+    const { contact } = await this.getByIdContact.execute(
+      orgganization.contactsId,
+    );
+    return contact;
   }
 }

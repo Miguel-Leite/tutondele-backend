@@ -5,29 +5,26 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { Request } from 'express';
-import authConfig from "./config";
 import { GqlExecutionContext } from '@nestjs/graphql';
+import { Request } from 'express';
 
+import authConfig from './config';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(private jwtService: JwtService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const { req, res } = GqlExecutionContext.create(context).getContext();
+    const { req } = GqlExecutionContext.create(context).getContext();
     const token = this.extractTokenFromHeader(req);
     if (!token) {
       throw new UnauthorizedException();
     }
     try {
-      const payload = await this.jwtService.verifyAsync(
-        token,
-        {
-          secret: authConfig.jwt.secret
-        }
-      );
-      
+      const payload = await this.jwtService.verifyAsync(token, {
+        secret: authConfig.jwt.secret,
+      });
+
       req['user'] = payload;
     } catch {
       throw new UnauthorizedException();

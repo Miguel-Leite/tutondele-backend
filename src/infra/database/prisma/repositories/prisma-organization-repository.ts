@@ -1,8 +1,8 @@
-import { Injectable } from "@nestjs/common";
-import { Organization } from "@app/entities/organization";
-import { OrganizationRepository } from "@app/repositories/organization-repository";
-import { PrismaService } from "../prisma.service";
-import { PrismaOrganizationMapper } from "../mappers/prisma-organization-mapper";
+import { Injectable } from '@nestjs/common';
+import { Organization } from '@app/entities/organization';
+import { OrganizationRepository } from '@app/repositories/organization-repository';
+import { PrismaService } from '../prisma.service';
+import { PrismaOrganizationMapper } from '../mappers/prisma-organization-mapper';
 
 @Injectable()
 export class PrismaOrganizationRepository implements OrganizationRepository {
@@ -16,7 +16,7 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
     const organization = await this.prisma.organizations.findFirst({
       where: {
         id: organizationsId,
-      }
+      },
     });
 
     if (!organization) {

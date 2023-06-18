@@ -12,7 +12,6 @@ interface CreateCustomerRequest {
   lastName: string;
   phone?: string | null;
   email: string;
-  password: string;
   level: string | null;
   organizationsId: string;
 }
@@ -28,8 +27,11 @@ export class CreateCustomer {
     private personRepository: PersonRepository,
   ) {}
 
-  async execute(request: CreateCustomerRequest): Promise<CreateCustomerResponse> {
-    const { password, level, firstName, lastName, email, phone, organizationsId } = request;
+  async execute(
+    request: CreateCustomerRequest,
+  ): Promise<CreateCustomerResponse> {
+    const { level, firstName, lastName, email, phone, organizationsId } =
+      request;
 
     const person = new Person({
       firstName,
@@ -40,7 +42,7 @@ export class CreateCustomer {
 
     const username = new Username(email);
 
-    const hashPassword = await hash(password, 10);
+    const hashPassword = await hash('password', 10);
 
     const customer = new Customer({
       organizationsId: organizationsId,

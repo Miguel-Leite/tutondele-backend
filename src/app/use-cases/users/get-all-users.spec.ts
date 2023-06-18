@@ -13,7 +13,7 @@ describe('Update User use case', () => {
     const getAllUsers = new GetAllUsers(usersRepository);
 
     const person = makePerson();
-    const { password, level } = makeUser({
+    const { level } = makeUser({
       personsId: person.id,
     });
 
@@ -22,7 +22,6 @@ describe('Update User use case', () => {
       lastName: person.lastName,
       email: person.email ? person.email : '',
       phone: person.phone,
-      password,
       level,
     });
 
@@ -31,7 +30,6 @@ describe('Update User use case', () => {
       lastName: person.lastName,
       email: person.email ? person.email : '',
       phone: person.phone,
-      password,
       level,
     });
 

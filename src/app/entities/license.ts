@@ -43,7 +43,7 @@ export class License {
   }
 
   public set code(code: string) {
-    this.code = code;
+    this.props.code = code;
   }
 
   public get code(): string {

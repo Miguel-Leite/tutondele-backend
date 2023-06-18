@@ -1,16 +1,15 @@
-import { Injectable } from "@nestjs/common";
-import { Student } from "@app/entities/student";
-import { StudentRepository } from "@app/repositories/student-repository";
-import { RoomRepository } from "@app/repositories/room-repository";
-import { RoomNotFound } from "../rooms/errors/room-not-found";
-import { Person } from "@app/entities/person";
-import { Bi } from "@app/entities/bi";
-import { PersonRepository } from "@app/repositories/person-repository";
+import { Injectable } from '@nestjs/common';
+import { Student } from '@app/entities/student';
+import { StudentRepository } from '@app/repositories/student-repository';
+import { RoomRepository } from '@app/repositories/room-repository';
+import { RoomNotFound } from '../rooms/errors/room-not-found';
+import { Person } from '@app/entities/person';
+import { PersonRepository } from '@app/repositories/person-repository';
 // import { KafkaService } from "@infra/messaging/kafka.service";
 
 export interface CreateStudentRequest {
-  organizationsId  : string;
-  roomsId          : string;
+  organizationsId: string;
+  roomsId: string;
   firstName: string;
   lastName: string;
   bi?: string;
@@ -27,25 +26,17 @@ export class CreateStudent {
   constructor(
     private studentRepository: StudentRepository,
     private personRepository: PersonRepository,
-    private roomRepository: RoomRepository,
-    // private kafka: KafkaService,
+    private roomRepository: RoomRepository, // private kafka: KafkaService,
   ) {}
 
   async execute(request: CreateStudentRequest): Promise<CreateStudentResponse> {
-    const { 
-        organizationsId, 
-        roomsId,
-        firstName,
-        lastName,
-        bi,
-        email,
-        phone,
-      } = request;
+    const { organizationsId, roomsId, firstName, lastName, bi, email, phone } =
+      request;
 
     const person = new Person({
       firstName,
       lastName,
-      bi: new Bi(bi),
+      bi,
       email,
       phone,
     });
@@ -65,9 +56,9 @@ export class CreateStudent {
       await this.personRepository.create(person),
       await this.studentRepository.create(student),
     ]);
-    
+
     return {
       student,
-    }
+    };
   }
 }

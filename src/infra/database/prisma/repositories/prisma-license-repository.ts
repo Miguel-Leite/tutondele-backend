@@ -29,7 +29,7 @@ export class PrismaLicenseRepository implements LicenseRepository {
 
     return PrismaLicenseMapper.toDomain(license);
   }
-  async findAll(): Promise<License[] | null> {
+  async findAll(): Promise<License[]> {
     const licenses = await this.prisma.licenses.findMany();
     return PrismaLicenseMapper.toDomainList(licenses);
   }

@@ -13,7 +13,7 @@ export class InMemoryPersonRepository implements PersonRepository {
     return person;
   }
   async findByBI(bi: string): Promise<Person | null> {
-    const person = this.persons.find((item) => item.bi?.value === bi);
+    const person = this.persons.find((item) => item.bi === bi);
 
     if (!person) {
       return null;

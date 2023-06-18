@@ -1,4 +1,4 @@
-import { Args, Mutation, Query } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { CreateLicense } from '@app/use-cases/licenses/create-license';
 import { GetAllLicenses } from '@app/use-cases/licenses/get-all-licenses';
@@ -10,6 +10,7 @@ import { LicenseModel } from '../dtos/models/license-model';
 import { CreateLicenseInput } from '../dtos/inputs/create-license-input';
 import { UpdateLicenseInput } from '../dtos/inputs/update-license-input';
 
+@Resolver(() => LicenseModel)
 export class LicensesResolver {
   constructor(
     private getAllLicenses: GetAllLicenses,

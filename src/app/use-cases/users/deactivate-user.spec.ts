@@ -13,7 +13,7 @@ describe('Deactivate User', () => {
     const deactivate = new DeactivateUser(usersRepository);
 
     const person = makePerson();
-    const { password, level } = makeUser({
+    const { level } = makeUser({
       personsId: person.id,
     });
 
@@ -22,7 +22,6 @@ describe('Deactivate User', () => {
       lastName: person.lastName,
       email: person.email ? person.email : '',
       phone: person.phone,
-      password,
       level,
     });
 

@@ -1,20 +1,19 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable } from '@nestjs/common';
 
-import { Student } from "@app/entities/student";
-import { Person } from "@app/entities/person";
-import { Bi } from "@app/entities/bi";
+import { Student } from '@app/entities/student';
+import { Person } from '@app/entities/person';
 
-import { StudentRepository } from "@app/repositories/student-repository";
-import { RoomRepository } from "@app/repositories/room-repository";
-import { PersonRepository } from "@app/repositories/person-repository";
+import { StudentRepository } from '@app/repositories/student-repository';
+import { RoomRepository } from '@app/repositories/room-repository';
+import { PersonRepository } from '@app/repositories/person-repository';
 
-import { RoomNotFound } from "../rooms/errors/room-not-found";
-import { StudentNotFound } from "./errors/student-not-found";
+import { RoomNotFound } from '../rooms/errors/room-not-found';
+import { StudentNotFound } from './errors/student-not-found';
 
 export interface UpdateStudentRequest {
-  id               : string;
-  organizationsId  : string;
-  roomsId          : string;
+  id: string;
+  organizationsId: string;
+  roomsId: string;
   firstName: string;
   lastName: string;
   bi?: string;
@@ -35,16 +34,16 @@ export class UpdateStudent {
   ) {}
 
   async execute(request: UpdateStudentRequest): Promise<UpdateStudentResponse> {
-    const { 
-        id,
-        organizationsId, 
-        roomsId,
-        firstName,
-        lastName,
-        bi,
-        email,
-        phone,
-      } = request;
+    const {
+      id,
+      organizationsId,
+      roomsId,
+      firstName,
+      lastName,
+      bi,
+      email,
+      phone,
+    } = request;
 
     const verifyRoomNotExists = await this.roomRepository.findById(roomsId);
 
@@ -57,19 +56,24 @@ export class UpdateStudent {
       throw new StudentNotFound();
     }
 
-    const personExists = await this.personRepository.findById(studentExists.personsId);
+    const personExists = await this.personRepository.findById(
+      studentExists.personsId,
+    );
 
     if (!personExists) {
       throw new StudentNotFound();
     }
 
-    const person = new Person({
-      firstName,
-      lastName,
-      bi: new Bi(bi),
-      email,
-      phone,
-    },personExists.id);
+    const person = new Person(
+      {
+        firstName,
+        lastName,
+        bi,
+        email,
+        phone,
+      },
+      personExists.id,
+    );
 
     const student = new Student({
       organizationsId,
@@ -81,9 +85,9 @@ export class UpdateStudent {
       await this.personRepository.save(person),
       await this.studentRepository.save(student),
     ]);
-    
+
     return {
       student,
-    }
+    };
   }
 }

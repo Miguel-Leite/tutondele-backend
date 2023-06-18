@@ -11,7 +11,6 @@ interface CreateUserRequest {
   lastName: string;
   phone?: string | null;
   email: string;
-  password: string;
   level: string | null;
 }
 
@@ -27,7 +26,7 @@ export class CreateUser {
   ) {}
 
   async execute(request: CreateUserRequest): Promise<CreateUserResponse> {
-    const { password, level, firstName, lastName, email, phone } = request;
+    const { level, firstName, lastName, email, phone } = request;
 
     const person = new Person({
       firstName,
@@ -38,7 +37,7 @@ export class CreateUser {
 
     const username = new Username(email);
 
-    const hashPassword = await hash(password, 10);
+    const hashPassword = await hash('password', 10);
 
     const user = new User({
       personsId: person.id,

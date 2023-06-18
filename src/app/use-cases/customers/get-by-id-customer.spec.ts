@@ -8,21 +8,23 @@ import { GetByIdCustomer } from './get-by-id-customer';
 describe('Get All Customers use case', () => {
   it('should be able to get all customers', async () => {
     const personRepository = new InMemoryPersonRepository();
-    const customerRepository = new InMemoryCustomerRepository(personRepository);;
-    const createCustomer = new CreateCustomer(customerRepository,personRepository);
-    const getByIdCustomer = new GetByIdCustomer(customerRepository)
+    const customerRepository = new InMemoryCustomerRepository(personRepository);
+    const createCustomer = new CreateCustomer(
+      customerRepository,
+      personRepository,
+    );
+    const getByIdCustomer = new GetByIdCustomer(customerRepository);
 
     const person = makePerson();
-    const { password, level } = makeUser({
+    const { level } = makeUser({
       personsId: person.id,
     });
 
     const { customer } = await createCustomer.execute({
       firstName: person.firstName,
       lastName: person.lastName,
-      email: person.email?person.email : '',
+      email: person.email ? person.email : '',
       phone: person.phone,
-      password,
       level,
       organizationsId: 'exemple-organization-id',
     });

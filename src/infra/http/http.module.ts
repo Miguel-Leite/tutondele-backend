@@ -83,6 +83,10 @@ import { GetByIdPaymentServiceMonthly } from '@app/use-cases/paymentServicesMont
 import { CreatePaymentServiceMonthly } from '@app/use-cases/paymentServicesMonthlys/create-payment-service-monthly';
 import { UpdatePaymentServiceMonthly } from '@app/use-cases/paymentServicesMonthlys/update-payment-service-monthly';
 import { RemovePaymentServiceMonthly } from '@app/use-cases/paymentServicesMonthlys/remove-payment-service-monthly';
+import { GetByIdPerson } from '@app/use-cases/persons/get-by-id-person';
+import { RemoveUser } from '@app/use-cases/users/remove-user';
+import { AuthUserService } from './auth/user/auth-user.service';
+import { GetByIdContact } from '@app/use-cases/organizations/get-by-id-contact';
 
 @Module({
   imports: [
@@ -116,13 +120,17 @@ import { RemovePaymentServiceMonthly } from '@app/use-cases/paymentServicesMonth
     UsersResolver,
     GetAllUsers,
     CreateUser,
+    RemoveUser,
+    AuthUserService,
     // Customers
     CustomersResolver,
     GetAllCustomers,
     CreateCustomer,
     // Organizations
     OrganizationsResolver,
+    GetByIdContact,
     StudentsResolver,
+    GetByIdPerson,
     GetAllStudents,
     CreateStudent,
     UpdateStudent,

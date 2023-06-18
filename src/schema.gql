@@ -6,13 +6,13 @@ type UserModel {
   id: ID!
   personsId: String!
   username: String!
-  password: String!
   level: String!
   verified: Boolean!
   acceptTermsAndConditions: Boolean!
   removed: DateTime
   created_at: DateTime
   updated_at: DateTime
+  person: PersonModel!
 }
 
 """
@@ -49,6 +49,7 @@ type OrganizationModel {
   removed: DateTime
   created_at: DateTime
   updated_at: DateTime
+  contacts: ContactModel!
 }
 
 """Type of teaching at the institution"""
@@ -60,27 +61,27 @@ enum Instruction {
   TECHNICAL_END_PUNISHABLE
 }
 
-type StudentModel {
+type ContactModel {
   id: ID!
-  personsId: String!
-  roomsId: String!
-  customersId: String
+  primaryPhone: String!
+  secundaryPhone: String
+  primaryEmail: String!
+  secundaryEmail: String
   created_at: DateTime
   updated_at: DateTime
 }
 
-type IdentityModel {
-  number: String!
-  name: String!
-  nif: String!
-  date_of_birth: String!
-  gender: String!
-  nationality: String!
-  father_full_name: String!
-  mother_full_name: String!
-  marital_status: String!
-  issuance_date: String!
-  issuance_location: String!
+type PersonModel {
+  id: ID!
+  addressesId: String
+  avatarsId: String
+  firstName: String!
+  lastName: String!
+  bi: String
+  removed: DateTime
+  phone: String
+  email: String
+  created_at: DateTime
 }
 
 type CourseModel {
@@ -99,6 +100,33 @@ type RoomModel {
   level: Float!
   period: String!
   studentsLimit: Float!
+  course: CourseModel!
+}
+
+type StudentModel {
+  id: ID!
+  personsId: String!
+  roomsId: String!
+  customersId: String
+  created_at: DateTime
+  updated_at: DateTime
+  person: PersonModel!
+  room: RoomModel!
+  account: CustomerModel!
+}
+
+type IdentityModel {
+  number: String!
+  name: String!
+  nif: String!
+  date_of_birth: String!
+  gender: String!
+  nationality: String!
+  father_full_name: String!
+  mother_full_name: String!
+  marital_status: String!
+  issuance_date: String!
+  issuance_location: String!
 }
 
 type PackageModel {
@@ -150,10 +178,11 @@ type ServiceMonthlyModel {
 type PaymentServiceMonthlyModel {
   id: ID!
   servicesMonthlysId: String!
-  organizationsId: String!
+  studentsId: String!
   iban: String!
   account_number: String!
-  price: Float!
+  reference: String!
+  value: Float!
   created_at: DateTime
   updated_at: DateTime
 }
@@ -170,6 +199,7 @@ type Query {
   customers: [CustomerModel!]!
   organizations: [OrganizationModel!]!
   students: [StudentModel!]!
+  student(id: String!): StudentModel!
   rooms: [RoomModel!]!
   room(id: String!): RoomModel!
   courses: [CourseModel!]!
@@ -189,7 +219,9 @@ type Mutation {
   addLicense(data: CreateLicenseInput!): LicenseModel!
   editLicense(data: UpdateLicenseInput!): LicenseModel!
   deleteLicense(id: String!): LicenseModel!
-  userCreate(data: CreateUserInput!): UserModel!
+  authenticationUser(data: AuthUserInput!): String!
+  addUser(data: CreateUserInput!): UserModel!
+  deleteUser(id: String!): UserModel!
   authenticationCustomer(data: AuthCustomerInput!): String!
   addCustomer(data: CreateCustomerInput!): CustomerModel!
   editCustomer(data: UpdateCustomerInput!): CustomerModel!
@@ -225,13 +257,11 @@ input CreatePackageInput {
   admins: Float!
   users: Float!
   services: Float!
-  removed: DateTime!
-  notification_email: Boolean!
-  notification_sms: Boolean!
-  manual_payment: Boolean!
-  realtime_payment: Boolean!
-  created_at: DateTime!
-  updated_at: DateTime!
+  notification_email: Boolean! = true
+  notification_sms: Boolean! = false
+  manual_payment: Boolean! = true
+  realtime_payment: Boolean! = false
+  security: Boolean! = true
 }
 
 input UpdatePackageInput {
@@ -264,14 +294,18 @@ input UpdateLicenseInput {
   endDate: DateTime
 }
 
+input AuthUserInput {
+  email: String!
+  password: String!
+}
+
 input CreateUserInput {
   firstName: String!
   lastName: String!
   bi: String
   phone: String
   email: String!
-  password: String!
-  level: String = "EMPLOYEE"
+  level: String = "MASTER"
 }
 
 input AuthCustomerInput {
@@ -390,7 +424,6 @@ input UpdateServiceInput {
 }
 
 input CreateServiceMonthlyInput {
-  id: ID!
   service: String!
   price: Float!
 }

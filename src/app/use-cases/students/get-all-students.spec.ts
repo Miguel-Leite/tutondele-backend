@@ -1,23 +1,34 @@
-import { InMemoryStudentRepository } from "@test/repositories/in-memory-student-repository";
-import { CreateStudent } from "./create-student";
-import { GetAllStudents } from "./get-all-students";
-import { InMemoryPersonRepository } from "@test/repositories/in-memory-person-repository";
+import { InMemoryStudentRepository } from '@test/repositories/in-memory-student-repository';
+import { CreateStudent } from './create-student';
+import { GetAllStudents } from './get-all-students';
+import { InMemoryPersonRepository } from '@test/repositories/in-memory-person-repository';
 
 describe('Get all students use case', () => {
   it('should be able to get all students', async () => {
-    
     const mockRoomRepository = {
-      findById: jest.fn().mockImplementation(() => Promise.resolve({ id: 'some-room-id' })),
-      checkRoomAvailability: jest.fn().mockImplementation(() => Promise.resolve(true)),
-      checkRoomAlreadyExists: jest.fn().mockImplementation(() => Promise.resolve(false)),
-      findAll: jest.fn().mockImplementation(() => Promise.resolve([{ id: 'some-room-id' }])),
+      findById: jest
+        .fn()
+        .mockImplementation(() => Promise.resolve({ id: 'some-room-id' })),
+      checkRoomAvailability: jest
+        .fn()
+        .mockImplementation(() => Promise.resolve(true)),
+      checkRoomAlreadyExists: jest
+        .fn()
+        .mockImplementation(() => Promise.resolve(false)),
+      findAll: jest
+        .fn()
+        .mockImplementation(() => Promise.resolve([{ id: 'some-room-id' }])),
       create: jest.fn().mockImplementation(() => Promise.resolve()),
       save: jest.fn().mockImplementation(() => Promise.resolve()),
     };
-    
+
     const studentRepository = new InMemoryStudentRepository();
     const personRepository = new InMemoryPersonRepository();
-    const createStudent = new CreateStudent(studentRepository, personRepository, mockRoomRepository);
+    const createStudent = new CreateStudent(
+      studentRepository,
+      personRepository,
+      mockRoomRepository,
+    );
     const getAllStudents = new GetAllStudents(studentRepository);
 
     await createStudent.execute({
@@ -28,7 +39,9 @@ describe('Get all students use case', () => {
       bi: '009899308LA049',
     });
 
-    const { students } = await getAllStudents.execute('example-organization-id')
+    const { students } = await getAllStudents.execute(
+      'example-organization-id',
+    );
 
     expect(students[0].created_at).toEqual(expect.any(Date));
   });

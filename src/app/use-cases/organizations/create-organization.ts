@@ -13,6 +13,7 @@ import { ContactRepository } from '@app/repositories/contact-repository';
 import { CustomerRepository } from '@app/repositories/customer-repository';
 import { PersonRepository } from '@app/repositories/person-repository';
 import { Organization } from '@app/entities/organization';
+
 import { CustomerEmailExists } from '../customers/errors/customer-email-exists';
 import { OrganizationEmailExists } from './errors/organization-email-exits';
 import { OrganizationPhoneExists } from './errors/organization-phone-exists';
@@ -57,7 +58,6 @@ export class CreateOrganization {
       lastName,
       phone,
       email,
-
       name,
       licensesId,
       slug,
@@ -88,17 +88,10 @@ export class CreateOrganization {
     }
 
     const primaryEmailOrganizationExists =
-      await this.contactRepository.findByPrimaryEmail(primaryEmail);
+      await this.contactRepository.findByPrimaryEmail(contact.primaryEmail);
 
     if (primaryEmailOrganizationExists) {
-      throw new OrganizationEmailExists(primaryEmail);
-    }
-
-    const secundaryEmailOrganizationExists =
-      await this.contactRepository.findBySecundaryEmail(secundaryEmail);
-
-    if (secundaryEmailOrganizationExists) {
-      throw new OrganizationEmailExists(secundaryEmail);
+      throw new OrganizationEmailExists();
     }
 
     const primaryPhoneOrganizationExists =
@@ -106,13 +99,6 @@ export class CreateOrganization {
 
     if (primaryPhoneOrganizationExists) {
       throw new OrganizationPhoneExists(primaryPhone);
-    }
-
-    const secundaryPhoneOrganizationExists =
-      await this.contactRepository.findBySecundaryPhone(secundaryPhone);
-
-    if (secundaryPhoneOrganizationExists) {
-      throw new OrganizationPhoneExists(secundaryPhone);
     }
 
     const organization = new Organization({

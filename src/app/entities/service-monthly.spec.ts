@@ -6,6 +6,7 @@ describe('Service Monthly', () => {
       organizationsId: 'example-organizations-id',
       price: 17000,
       service: 'Propina da 13ª classe',
+      link: 'https://example.com',
     });
 
     expect(serviceMonthly).toBeTruthy();

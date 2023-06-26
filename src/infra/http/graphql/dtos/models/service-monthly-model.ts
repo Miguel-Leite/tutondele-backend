@@ -9,6 +9,9 @@ export class ServiceMonthlyModel {
   service!: string;
 
   @Field()
+  link!: string;
+
+  @Field()
   price!: number;
 
   @Field()

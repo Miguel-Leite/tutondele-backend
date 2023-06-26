@@ -3,7 +3,9 @@ import { PackageRepository } from '@app/repositories/package-repository';
 
 import { PrismaService } from '../prisma.service';
 import { PrismaPackageMapper } from '../mappers/prisma-package-mapper';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class PrismaPackageRepository implements PackageRepository {
   constructor(private prisma: PrismaService) {}
 

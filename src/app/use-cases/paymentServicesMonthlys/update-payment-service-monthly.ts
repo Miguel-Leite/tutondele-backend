@@ -5,7 +5,6 @@ import { PaymentServiceMonthlyRepository } from '@app/repositories/payment-servi
 import { ServiceMonthlyRepository } from '@app/repositories/service-monthly-repository';
 import { generateCode } from '@helpers/generate-code';
 
-import { ReferencePaymentServiceMonthlyAlreadyExists } from './errors/reference-payment-service-monthly-already-exists';
 import { ServiceMonthlyNotFound } from '../serviceMonthlys/errors/service-monthly-not-found';
 import { PaymentServiceMonthlyNotFound } from './errors/payment-service-monthly-not-found';
 
@@ -45,13 +44,6 @@ export class UpdatePaymentServiceMonthly {
       value,
     } = request;
 
-    const referenceAlreadyExists =
-      await this.paymentServiceMonthlyRepository.findByReference(reference);
-
-    // if (referenceAlreadyExists) {
-    //   throw new ReferencePaymentServiceMonthlyAlreadyExists();
-    // }
-
     const serviceExists = await this.serviceMonthlyRepository.findById(
       servicesMonthlysId,
     );
@@ -83,6 +75,7 @@ export class UpdatePaymentServiceMonthly {
         servicesMonthlysId,
         studentsId,
         value,
+        status: paymentServiceMonthlyExists.status,
       },
       id,
     );

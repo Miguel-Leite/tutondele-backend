@@ -5,6 +5,7 @@ import { User } from '@app/entities/user';
 import { Username } from '@app/entities/username';
 import { PersonRepository } from '@app/repositories/person-repository';
 import { UserRepository } from '@app/repositories/user-repository';
+import { UserEmailExists } from './errors/user-email-exists';
 
 interface CreateUserRequest {
   firstName: string;
@@ -36,6 +37,12 @@ export class CreateUser {
     });
 
     const username = new Username(email);
+
+    const emailAlreadyExists = await this.personRepository.findByEmail(email);
+
+    if (emailAlreadyExists) {
+      throw new UserEmailExists();
+    }
 
     const hashPassword = await hash('password', 10);
 

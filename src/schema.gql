@@ -154,6 +154,7 @@ type LicenseModel {
   endDate: DateTime!
   created_at: DateTime
   updated_at: DateTime
+  package: PackageModel!
 }
 
 type ServiceModel {
@@ -169,6 +170,7 @@ type ServiceModel {
 type ServiceMonthlyModel {
   id: ID!
   service: String!
+  link: String!
   price: Float!
   organizationsId: String!
   created_at: DateTime
@@ -182,9 +184,19 @@ type PaymentServiceMonthlyModel {
   iban: String!
   account_number: String!
   reference: String!
+  status: Status!
   value: Float!
   created_at: DateTime
   updated_at: DateTime
+  student: StudentModel!
+  service: ServiceMonthlyModel!
+}
+
+"""Status payments"""
+enum Status {
+  CANCELED
+  PENDING
+  APPROVED
 }
 
 type Query {
@@ -248,6 +260,9 @@ type Mutation {
   addPaymentServiceMonthly(data: CreatePaymentServiceMonthlyInput!): PaymentServiceMonthlyModel!
   editPaymentServiceMonthly(data: UpdatePaymentServiceMonthlyInput!): PaymentServiceMonthlyModel!
   deletePaymentServiceMonthly(id: String!): PaymentServiceMonthlyModel!
+  approvedPaymentServiceMonthly(id: String!): PaymentServiceMonthlyModel!
+  canceledPaymentServiceMonthly(id: String!): PaymentServiceMonthlyModel!
+  pendingPaymentServiceMonthly(id: String!): PaymentServiceMonthlyModel!
 }
 
 input CreatePackageInput {

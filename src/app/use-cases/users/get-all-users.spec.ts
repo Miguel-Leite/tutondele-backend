@@ -25,14 +25,6 @@ describe('Update User use case', () => {
       level,
     });
 
-    await createUser.execute({
-      firstName: person.firstName,
-      lastName: person.lastName,
-      email: person.email ? person.email : '',
-      phone: person.phone,
-      level,
-    });
-
     const { users } = await getAllUsers.execute();
 
     expect(users[0].created_at).toEqual(expect.any(Date));

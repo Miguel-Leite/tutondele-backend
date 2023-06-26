@@ -12,7 +12,6 @@ export class GetAllLicenses {
 
   async execute(): Promise<GetAllLicensesResponse> {
     const licenses = await this.licenseRepository.findAll();
-    console.log(licenses);
     return {
       licenses,
     };

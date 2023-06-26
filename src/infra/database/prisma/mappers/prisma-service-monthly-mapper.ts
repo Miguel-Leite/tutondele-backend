@@ -6,6 +6,7 @@ export class PrismaServiceMonthlyMapper {
     return {
       id: serviceMonthly.id,
       service: serviceMonthly.service,
+      link: serviceMonthly.link,
       price: serviceMonthly.price,
       removed: serviceMonthly.removed,
       organizationsId: serviceMonthly.organizationsId,
@@ -16,6 +17,7 @@ export class PrismaServiceMonthlyMapper {
     return new ServiceMonthly(
       {
         service: raw.service,
+        link: raw.link,
         price: raw.price,
         removed: raw.removed,
         organizationsId: raw.organizationsId,

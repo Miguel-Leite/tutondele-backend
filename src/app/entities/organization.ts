@@ -1,22 +1,22 @@
 import { randomUUID } from 'node:crypto';
 
-import { Replace } from "@helpers/Replace";
+import { Replace } from '@helpers/Replace';
 import { Instruction } from '@prisma/client';
 
 export interface OrganizationProps {
-  licensesId              : string;
-  logosId?                : string | null;
-  addressesId             : string;
-  contactsId              : string;
-  calendarysId?           : string | null;
+  licensesId: string;
+  logosId?: string | null;
+  addressesId: string;
+  contactsId: string;
+  calendarysId?: string | null;
 
-  name                    : string;
-  slug                    : string;
-  birth?                  : Date | null;
-  instruction             : Instruction;
-  about?                  : string | null;
+  name: string;
+  slug: string;
+  birth?: Date | null;
+  instruction: Instruction;
+  about?: string | null;
 
-  is_active?              : boolean;
+  is_active?: boolean;
   removed?: Date | null;
 
   created_at: Date;
@@ -27,10 +27,7 @@ export class Organization {
   private _id: string;
   private props: OrganizationProps;
   constructor(
-    props: Replace<
-      OrganizationProps,
-      { created_at?: Date; updated_at?: Date }
-    >,
+    props: Replace<OrganizationProps, { created_at?: Date; updated_at?: Date }>,
     id?: string,
   ) {
     this._id = id ?? randomUUID();
@@ -40,7 +37,7 @@ export class Organization {
       updated_at: props.created_at ?? new Date(),
     };
   }
-  
+
   public get id(): string {
     return this._id;
   }
@@ -49,7 +46,7 @@ export class Organization {
     this.props.logosId = logosId;
   }
 
-  public get logosId(): string | null | undefined{
+  public get logosId(): string | null | undefined {
     return this.props.logosId;
   }
 
@@ -57,7 +54,7 @@ export class Organization {
     this.props.licensesId = licensesId;
   }
 
-  public get licensesId(): string{
+  public get licensesId(): string {
     return this.props.licensesId;
   }
 

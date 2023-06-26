@@ -12,6 +12,7 @@ export class PrismaPaymentServiceMonthlyMapper {
       reference: paymentServiceMonthly.reference,
       servicesMonthlysId: paymentServiceMonthly.servicesMonthlysId,
       studentsId: paymentServiceMonthly.studentsId,
+      status: paymentServiceMonthly.status,
       value: paymentServiceMonthly.value,
     };
   }
@@ -26,6 +27,7 @@ export class PrismaPaymentServiceMonthlyMapper {
         reference: raw.reference,
         servicesMonthlysId: raw.servicesMonthlysId,
         studentsId: raw.studentsId,
+        status: raw.status,
         value: raw.value,
       },
       raw.id,

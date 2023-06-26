@@ -188,6 +188,7 @@ model Organizations {
   servicesMonthlys              ServicesMonthlys[]
   alerts                        Alerts[]
   paymentServicesMonthlys       PaymentServicesMonthlys[]
+  PaymentServices               PaymentServices[]
 
   @@index([addressesId])
   @@index([contactsId])
@@ -292,8 +293,9 @@ model Services {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  organizations Organizations @relation(fields: [organizationsId], references: [id])
+  organizations   Organizations     @relation(fields: [organizationsId], references: [id])
   // categories    Categories    @relation(fields: [categoriesId], references: [id])
+  paymentServices PaymentServices[]
 
   @@index([organizationsId])
   // @@index([categoriesId])
@@ -305,6 +307,7 @@ model ServicesMonthlys {
   organizationsId String
 
   service String
+  link    String?
   price   Float
   removed DateTime?
 
@@ -390,6 +393,7 @@ model Students {
 
   studentsHasInCharges    StudentsHasInCharges[]
   PaymentServicesMonthlys PaymentServicesMonthlys[]
+  paymentServices         PaymentServices[]
 
   @@index([organizationsId])
   @@index([personsId])
@@ -508,6 +512,12 @@ model Licenses {
   @@map("licenses")
 }
 
+enum Status {
+  CANCELED
+  PENDING
+  APPROVED
+}
+
 model PaymentServicesMonthlys {
   id                 String @id @default(uuid())
   servicesMonthlysId String
@@ -520,13 +530,53 @@ model PaymentServicesMonthlys {
   reference      String
   iban           String
   account_number String
-
-  removed DateTime?
+  status         Status?   @default(PENDING)
+  removed        DateTime?
 
   servicesMonthlys ServicesMonthlys @relation(fields: [servicesMonthlysId], references: [id])
   students         Students         @relation(fields: [studentsId], references: [id])
   organizations    Organizations    @relation(fields: [organizationsId], references: [id])
 
-  created_at       DateTime         @default(now())
-  updated_at       DateTime         @default(now())
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@map("paymentServicesMonthlys")
+}
+
+model PaymentServices {
+  id              String @id @default(uuid())
+  servicesId      String
+  studentsId      String
+  organizationsId String
+
+  value  Float
+  status Status? @default(PENDING)
+
+  removed DateTime?
+
+  services      Services      @relation(fields: [servicesId], references: [id])
+  students      Students      @relation(fields: [studentsId], references: [id])
+  organizations Organizations @relation(fields: [organizationsId], references: [id])
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@map("paymentServices")
+}
+
+model Payments {
+  id              String @id @default(uuid())
+  organizationsId String
+  paymentsId      String
+  
+  value           Float
+
+  removed DateTime?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@index([organizationsId])
+  @@index([paymentsId])
+  @@map("payments")
 }

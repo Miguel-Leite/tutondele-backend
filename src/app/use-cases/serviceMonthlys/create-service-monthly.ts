@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { ServiceMonthlyRepository } from '@app/repositories/service-monthly-repository';
 import { ServiceMonthly } from '@app/entities/service-monthly';
 import { ServiceMonthlyAlreadyExists } from './errors/service-monthly-already-exists';
+import { createProduct } from '@helpers/stripe-payment';
 
 interface CreateServiceMonthlyRequest {
   service: string;
@@ -30,7 +31,14 @@ export class CreateServiceMonthly {
       throw new ServiceMonthlyAlreadyExists();
     }
 
+    const { link } = await createProduct({
+      name: service,
+      organizationsId,
+      usdAmount: price,
+    });
+
     const serviceMonthly = new ServiceMonthly({
+      link,
       service,
       price,
       organizationsId,

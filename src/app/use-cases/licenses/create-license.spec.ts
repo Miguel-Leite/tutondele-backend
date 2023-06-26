@@ -20,6 +20,7 @@ describe('Create license use case', () => {
     const responsePackage = await createPackage.execute(makePackage());
     const { license } = await createLicense.execute(
       makeLicense({
+        startDate: new Date('2023/05/01'),
         packagesId: responsePackage.package.id,
       }),
     );

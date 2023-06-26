@@ -3,7 +3,9 @@ import { LicenseRepository } from '@app/repositories/license-repository';
 
 import { PrismaService } from '../prisma.service';
 import { PrismaLicenseMapper } from '../mappers/prisma-license-mapper';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class PrismaLicenseRepository implements LicenseRepository {
   constructor(private prisma: PrismaService) {}
 

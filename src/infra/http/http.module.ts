@@ -59,7 +59,7 @@ import { GetByIdPackage } from '@app/use-cases/packages/get-by-id-package';
 import { CreatePackage } from '@app/use-cases/packages/create-package';
 import { UpdatePackage } from '@app/use-cases/packages/update-package';
 import { RemovePackage } from '@app/use-cases/packages/remove-package';
-import { LicensesResolver } from './graphql/resolvers/Licenses.resolver';
+import { LicensesResolver } from './graphql/resolvers/licenses.resolver';
 import { GetAllLicenses } from '@app/use-cases/licenses/get-all-licenses';
 import { GetByIdLicense } from '@app/use-cases/licenses/get-by-id-license';
 import { CreateLicense } from '@app/use-cases/licenses/create-license';
@@ -87,6 +87,15 @@ import { GetByIdPerson } from '@app/use-cases/persons/get-by-id-person';
 import { RemoveUser } from '@app/use-cases/users/remove-user';
 import { AuthUserService } from './auth/user/auth-user.service';
 import { GetByIdContact } from '@app/use-cases/organizations/get-by-id-contact';
+import { ApprovedPaymentService } from '@app/use-cases/paymentServices/approved-payment-service';
+import { CanceledPaymentService } from '@app/use-cases/paymentServices/canceled-payment-service';
+import { PendingPaymentService } from '@app/use-cases/paymentServices/pending-payment-service';
+import { CreatePaymentService } from '@app/use-cases/paymentServices/create-payment-service';
+import { UpdatePaymentService } from '@app/use-cases/paymentServices/update-payment-service';
+import { GetByIdPaymentService } from '@app/use-cases/paymentServices/get-by-id-payment-service';
+import { ApprovedPaymentServiceMonthly } from '@app/use-cases/paymentServicesMonthlys/approved-payment-service-monthly';
+import { CanceledPaymentServiceMonthly } from '@app/use-cases/paymentServicesMonthlys/canceled-payment-service-monthly';
+import { PendingPaymentServiceMonthly } from '@app/use-cases/paymentServicesMonthlys/pending-payment-service-monthly';
 
 @Module({
   imports: [
@@ -177,11 +186,21 @@ import { GetByIdContact } from '@app/use-cases/organizations/get-by-id-contact';
     UpdateServiceMonthly,
     RemoveServiceMonthly,
     PaymentServiceMonthlysResolver,
+    ApprovedPaymentServiceMonthly,
+    CanceledPaymentServiceMonthly,
+    PendingPaymentServiceMonthly,
     GetAllPaymentsServicesMonthlys,
     GetByIdPaymentServiceMonthly,
     CreatePaymentServiceMonthly,
     UpdatePaymentServiceMonthly,
     RemovePaymentServiceMonthly,
+    ApprovedPaymentService,
+    CanceledPaymentService,
+    PendingPaymentService,
+    CreatePaymentService,
+    UpdatePaymentService,
+    GetByIdPaymentService,
+    GetAllPaymentsServicesMonthlys,
   ],
 })
 export class HttpModule {}

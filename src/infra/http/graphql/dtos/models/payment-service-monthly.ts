@@ -1,4 +1,10 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Status } from '@prisma/client';
+
+registerEnumType(Status, {
+  name: 'Status',
+  description: 'Status payments',
+});
 
 @ObjectType()
 export class PaymentServiceMonthlyModel {
@@ -19,6 +25,9 @@ export class PaymentServiceMonthlyModel {
 
   @Field()
   reference!: string;
+
+  @Field(() => Status)
+  status!: Status;
 
   @Field()
   value!: number;

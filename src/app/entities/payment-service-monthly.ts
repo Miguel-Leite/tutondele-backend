@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 
 import { Replace } from '@helpers/Replace';
+import { Status } from '@prisma/client';
 
 export interface PaymentServiceMonthlysProps {
   studentsId: string;
@@ -10,6 +11,7 @@ export interface PaymentServiceMonthlysProps {
   value: number;
   reference: string;
   iban: string;
+  status: Status | null;
   account_number: string;
   removed?: Date | null;
   created_at?: Date;
@@ -89,12 +91,32 @@ export class PaymentServiceMonthly {
     return this.props.iban;
   }
 
+  public set status(status: Status) {
+    this.props.status = status;
+  }
+
+  public get status(): Status {
+    return this.props.status as Status;
+  }
+
   public set account_number(account_number: string) {
     this.props.account_number = account_number;
   }
 
   public get account_number(): string {
     return this.props.account_number;
+  }
+
+  public approved() {
+    this.props.status = Status.APPROVED;
+  }
+
+  public canceled() {
+    this.props.status = Status.CANCELED;
+  }
+
+  public pending() {
+    this.props.status = Status.PENDING;
   }
 
   public remove() {

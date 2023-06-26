@@ -21,6 +21,7 @@ describe('Get by id license use case', () => {
 
     const response = await createLicense.execute(
       makeLicense({
+        startDate: new Date('2023/05/01'),
         packagesId: responsePackage.package.id,
       }),
     );

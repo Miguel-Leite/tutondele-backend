@@ -16,7 +16,6 @@ export class GetAllOrganizations {
 
   async execute(): Promise<GetAllOrganizationsResponse> {
     const organizations = await this.organizationRepository.findAll();
-    console.log(this.licenseRepository.findAll());
     return { organizations };
   }
 }

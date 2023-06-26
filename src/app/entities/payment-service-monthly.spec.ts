@@ -11,6 +11,7 @@ describe('Payment Services Monthlys', () => {
       servicesMonthlysId: 'example-servicesMonthlys-id',
       studentsId: 'example-student-id',
       organizationsId: 'example-organizations-id',
+      status: 'PENDING',
       value: 32000,
     });
     expect(paymentServiceMonthly).toBeTruthy();

@@ -72,6 +72,7 @@ export class CreatePaymentServiceMonthly {
       servicesMonthlysId,
       studentsId,
       value,
+      status: 'APPROVED',
     });
 
     await this.paymentServiceMonthlyRepository.create(paymentServiceMonthly);

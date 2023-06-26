@@ -1,11 +1,10 @@
 import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { Instruction } from '@prisma/client';
 
-
 registerEnumType(Instruction, {
   name: 'Instruction',
   description: 'Type of teaching at the institution',
-}); 
+});
 
 @ObjectType()
 export class OrganizationModel {
@@ -16,31 +15,31 @@ export class OrganizationModel {
   licensesId!: string;
 
   @Field({ nullable: true })
-  logosId?                : string;
-  
-  @Field()
-  addressesId!             : string;
-  
-  @Field()
-  contactsId!: string;
-  
-  @Field({ nullable: true })
-  calendarysId?           : string;
+  logosId?: string;
 
   @Field()
-  name!                    : string;
-  
+  addressesId!: string;
+
   @Field()
-  slug!                    : string;
-  
+  contactsId!: string;
+
   @Field({ nullable: true })
-  birth!                  : Date;
-  
+  calendarysId?: string;
+
+  @Field()
+  name!: string;
+
+  @Field()
+  slug!: string;
+
+  @Field({ nullable: true })
+  birth!: Date;
+
   @Field(() => Instruction)
-  instruction!             : Instruction;
-  
+  instruction!: Instruction;
+
   @Field({ nullable: true })
-  about!                  : string;
+  about!: string;
 
   @Field()
   is_active!: boolean;

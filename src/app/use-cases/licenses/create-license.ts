@@ -40,6 +40,19 @@ export class CreateLicense {
       throw new PackageNotFound();
     }
 
+    if (startDate >= endDate) {
+      throw new Error('The start date must be before the license end date.');
+    }
+
+    const diffInMonths =
+      endDate.getMonth() -
+      startDate.getMonth() +
+      12 * (endDate.getFullYear() - startDate.getFullYear());
+    if (diffInMonths < 1) {
+      throw new Error(
+        'There must be a minimum difference of 1 month between the start date and end date of the license.',
+      );
+    }
     await this.licenseRepository.create(license);
 
     return {

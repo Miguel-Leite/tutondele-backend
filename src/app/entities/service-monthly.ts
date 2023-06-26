@@ -6,6 +6,7 @@ export interface ServiceMonthlysProps {
   service: string;
   price: number;
   organizationsId: string;
+  link?: string | null;
   removed?: Date | null;
   created_at?: Date;
 }
@@ -42,6 +43,14 @@ export class ServiceMonthly {
 
   public get service(): string {
     return this.props.service.toLowerCase();
+  }
+
+  public set link(link: string | null | undefined) {
+    this.props.link = link;
+  }
+
+  public get link(): string | null | undefined {
+    return this.props.link;
   }
 
   public set price(price: number) {

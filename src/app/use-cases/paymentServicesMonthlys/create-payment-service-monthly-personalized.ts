@@ -66,6 +66,7 @@ export class CreatePaymentServiceMonthlyPersonalized {
       servicesMonthlysId,
       studentsId,
       value,
+      status: 'PENDING',
     });
 
     await this.paymentServiceMonthlyRepository.create(paymentServiceMonthly);

@@ -5,6 +5,9 @@ export class CreateServiceMonthlyInput {
   @Field()
   service!: string;
 
+  @Field({ nullable: true })
+  fee!: boolean;
+
   @Field()
   price!: number;
 }

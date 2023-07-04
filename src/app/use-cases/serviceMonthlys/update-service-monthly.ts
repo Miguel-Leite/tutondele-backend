@@ -9,6 +9,7 @@ interface UpdateServiceMonthlyRequest {
   id: string;
   service: string;
   price: number;
+  fee?: boolean | null;
   organizationsId: string;
 }
 
@@ -23,12 +24,13 @@ export class UpdateServiceMonthly {
   async execute(
     request: UpdateServiceMonthlyRequest,
   ): Promise<UpdateServiceMonthlyResponse> {
-    const { id, service, price, organizationsId } = request;
+    const { id, service, price, fee, organizationsId } = request;
 
     const serviceMonthly = new ServiceMonthly(
       {
         service,
         price,
+        fee,
         organizationsId,
       },
       id,

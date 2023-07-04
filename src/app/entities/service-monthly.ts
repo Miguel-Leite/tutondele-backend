@@ -7,6 +7,7 @@ export interface ServiceMonthlysProps {
   price: number;
   organizationsId: string;
   link?: string | null;
+  fee?: boolean | null;
   removed?: Date | null;
   created_at?: Date;
 }
@@ -51,6 +52,14 @@ export class ServiceMonthly {
 
   public get link(): string | null | undefined {
     return this.props.link;
+  }
+
+  public set fee(fee: boolean | null | undefined) {
+    this.props.fee = fee;
+  }
+
+  public get fee(): boolean | null | undefined {
+    return this.props.fee;
   }
 
   public set price(price: number) {

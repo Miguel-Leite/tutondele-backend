@@ -8,7 +8,7 @@ export class ServiceMonthlyModel {
   @Field()
   service!: string;
 
-  @Field()
+  @Field({ nullable: true })
   link!: string;
 
   @Field()

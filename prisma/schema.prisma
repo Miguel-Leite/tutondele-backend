@@ -188,7 +188,10 @@ model Organizations {
   servicesMonthlys              ServicesMonthlys[]
   alerts                        Alerts[]
   paymentServicesMonthlys       PaymentServicesMonthlys[]
-  PaymentServices               PaymentServices[]
+  paymentServices               PaymentServices[]
+  tuitionPayments               TuitionPayments[]
+  payments                      Payments[]
+  academicYears                 AcademicYears[]
 
   @@index([addressesId])
   @@index([contactsId])
@@ -309,6 +312,8 @@ model ServicesMonthlys {
   service String
   link    String?
   price   Float
+  fee     Boolean? @default(false)
+
   removed DateTime?
 
   created_at DateTime @default(now())
@@ -316,6 +321,7 @@ model ServicesMonthlys {
 
   organizations           Organizations             @relation(fields: [organizationsId], references: [id])
   paymentServicesMonthlys PaymentServicesMonthlys[]
+  tuitionPayments         TuitionPayments[]
 
   @@index([organizationsId])
   @@map("servicesMonthlys")
@@ -394,6 +400,7 @@ model Students {
   studentsHasInCharges    StudentsHasInCharges[]
   PaymentServicesMonthlys PaymentServicesMonthlys[]
   paymentServices         PaymentServices[]
+  tuitionPayments         TuitionPayments[]
 
   @@index([organizationsId])
   @@index([personsId])
@@ -416,6 +423,19 @@ model StudentsHasInCharges {
   @@map("studentsHasInCharges")
 }
 
+model CategoryNotifications {
+  id String @id @default(uuid())
+
+  name    String
+  removed DateTime?
+
+  created_at    DateTime        @default(now())
+  updated_at    DateTime        @default(now())
+  notifications Notifications[]
+
+  @@map("categoryNotifications")
+}
+
 model Notifications {
   id   String @id
   type String
@@ -427,6 +447,8 @@ model Notifications {
   updated_at DateTime @default(now())
 
   notificationsHasOrganizations NotificationsHasOrganizations[]
+  categoryNotifications         CategoryNotifications?          @relation(fields: [categoryNotificationsId], references: [id])
+  categoryNotificationsId       String?
 
   @@map("notifications")
 }
@@ -564,19 +586,69 @@ model PaymentServices {
   @@map("paymentServices")
 }
 
-model Payments {
-  id              String @id @default(uuid())
-  organizationsId String
-  paymentsId      String
-  
-  value           Float
+model TuitionPayments {
+  id                 String @id @default(uuid())
+  studentsId         String
+  servicesMonthlysId String
+  organizationsId    String
+
+  value  Float
+  month  Int
+  status Status? @default(PENDING)
 
   removed DateTime?
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
+  students         Students         @relation(fields: [studentsId], references: [id])
+  organizations    Organizations    @relation(fields: [organizationsId], references: [id])
+  servicesMonthlys ServicesMonthlys @relation(fields: [servicesMonthlysId], references: [id])
+
+  @@map("tuitionPayments")
+}
+
+model Payments {
+  id              String @id @default(uuid())
+  organizationsId String
+  paymentsId      String
+
+  value Float
+
+  removed DateTime?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  organizations Organizations @relation(fields: [organizationsId], references: [id])
+
   @@index([organizationsId])
   @@index([paymentsId])
   @@map("payments")
+}
+
+model MessagesSMS {
+  id              String @id @default(uuid())
+  organizationsId String
+
+  title   String
+  text    String
+  numbers Json
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@map("messagesSMS")
+}
+
+model AcademicYears {
+  id              String @id @default(uuid())
+  organizationsId String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  organizations Organizations @relation(fields: [organizationsId], references: [id])
+
+  @@map("AcademicYears")
 }

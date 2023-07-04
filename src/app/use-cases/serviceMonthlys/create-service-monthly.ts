@@ -8,6 +8,7 @@ import { createProduct } from '@helpers/stripe-payment';
 interface CreateServiceMonthlyRequest {
   service: string;
   price: number;
+  fee?: boolean | null;
   organizationsId: string;
 }
 
@@ -22,7 +23,7 @@ export class CreateServiceMonthly {
   async execute(
     request: CreateServiceMonthlyRequest,
   ): Promise<CreateServiceMonthlyResponse> {
-    const { service, price, organizationsId } = request;
+    const { service, price, fee, organizationsId } = request;
 
     const serviceMonthlyExists =
       await this.serviceMonthlyRepository.findByService(service);
@@ -41,6 +42,7 @@ export class CreateServiceMonthly {
       link,
       service,
       price,
+      fee,
       organizationsId,
     });
 

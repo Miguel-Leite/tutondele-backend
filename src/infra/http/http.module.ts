@@ -96,6 +96,8 @@ import { GetByIdPaymentService } from '@app/use-cases/paymentServices/get-by-id-
 import { ApprovedPaymentServiceMonthly } from '@app/use-cases/paymentServicesMonthlys/approved-payment-service-monthly';
 import { CanceledPaymentServiceMonthly } from '@app/use-cases/paymentServicesMonthlys/canceled-payment-service-monthly';
 import { PendingPaymentServiceMonthly } from '@app/use-cases/paymentServicesMonthlys/pending-payment-service-monthly';
+import { CreateTuitionPayment } from '@app/use-cases/tuitionPayments/create-tuition-payment';
+import { TuitionPaymentResolver } from './graphql/resolvers/tuition-payment.resolver';
 
 @Module({
   imports: [
@@ -201,6 +203,8 @@ import { PendingPaymentServiceMonthly } from '@app/use-cases/paymentServicesMont
     UpdatePaymentService,
     GetByIdPaymentService,
     GetAllPaymentsServicesMonthlys,
+    CreateTuitionPayment,
+    TuitionPaymentResolver,
   ],
 })
 export class HttpModule {}

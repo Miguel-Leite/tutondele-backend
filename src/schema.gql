@@ -170,7 +170,7 @@ type ServiceModel {
 type ServiceMonthlyModel {
   id: ID!
   service: String!
-  link: String!
+  link: String
   price: Float!
   organizationsId: String!
   created_at: DateTime
@@ -197,6 +197,17 @@ enum Status {
   CANCELED
   PENDING
   APPROVED
+}
+
+type TuitionPaymentModel {
+  id: ID!
+  servicesMonthlysId: String!
+  studentsId: String!
+  month: Float!
+  status: Status!
+  value: Float!
+  created_at: DateTime
+  updated_at: DateTime
 }
 
 type Query {
@@ -263,6 +274,7 @@ type Mutation {
   approvedPaymentServiceMonthly(id: String!): PaymentServiceMonthlyModel!
   canceledPaymentServiceMonthly(id: String!): PaymentServiceMonthlyModel!
   pendingPaymentServiceMonthly(id: String!): PaymentServiceMonthlyModel!
+  addTuitionPayment(data: CreateTuitionPaymentInput!): TuitionPaymentModel!
 }
 
 input CreatePackageInput {
@@ -440,12 +452,14 @@ input UpdateServiceInput {
 
 input CreateServiceMonthlyInput {
   service: String!
+  fee: Boolean
   price: Float!
 }
 
 input UpdateServiceMonthlyInput {
   id: ID!
   service: String
+  fee: Boolean
   price: Float
 }
 
@@ -466,4 +480,12 @@ input UpdatePaymentServiceMonthlyInput {
   account_number: String
   reference: String
   value: Float
+}
+
+input CreateTuitionPaymentInput {
+  servicesMonthlysId: String!
+  studentsId: String!
+  month: Float!
+  status: Status! = PENDING
+  value: Float!
 }

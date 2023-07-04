@@ -34,6 +34,8 @@ import { PaymentServiceRepository } from '@app/repositories/payment-service-repo
 import { PrismaPaymentServiceRepository } from './prisma/repositories/prisma-payment-service-repository';
 import { PaymentRepository } from '@app/repositories/payment-repository';
 import { PrismaPaymentRepository } from './prisma/repositories/prisma-payment-repository';
+import { TuitionPaymentRepository } from '@app/repositories/tuition-payment-repository';
+import { PrismaTuitionPaymentRepository } from './prisma/repositories/prisma-tuition-payment-repository';
 
 @Module({
   providers: [
@@ -110,6 +112,10 @@ import { PrismaPaymentRepository } from './prisma/repositories/prisma-payment-re
       provide: PaymentRepository,
       useClass: PrismaPaymentRepository,
     },
+    {
+      provide: TuitionPaymentRepository,
+      useClass: PrismaTuitionPaymentRepository,
+    },
   ],
   exports: [
     UserRepository,
@@ -129,6 +135,7 @@ import { PrismaPaymentRepository } from './prisma/repositories/prisma-payment-re
     PaymentServiceMonthlyRepository,
     PaymentServiceRepository,
     PaymentRepository,
+    TuitionPaymentRepository,
   ],
 })
 export class DatabaseModule {}

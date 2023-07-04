@@ -9,5 +9,8 @@ export class UpdateServiceMonthlyInput {
   service!: string;
 
   @Field({ nullable: true })
+  fee!: boolean;
+
+  @Field({ nullable: true })
   price!: number;
 }

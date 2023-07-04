@@ -96,8 +96,9 @@ export async function createProduct({
       },
     ],
     mode: 'subscription', // Altera o modo para 'subscription'
-    success_url: 'http://localhost:5000/success',
-    cancel_url: 'http://localhost:5000/cancel',
+    success_url: 'http://localhost:5173/dashboard/estudantes',
+    cancel_url:
+      'http://localhost:5173/dashboard/pagamentos/63cabe43-e379-4acc-9378-5a8e216f0e91/escolher-servico',
   });
 
   const paymentLink = session.url;

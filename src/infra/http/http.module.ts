@@ -106,7 +106,7 @@ import { TuitionPaymentResolver } from './graphql/resolvers/tuition-payment.reso
     AuthModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: '../../schema.gql',
+      autoSchemaFile: resolve(process.cwd(), 'src/schema.gql'),
     }),
   ],
   providers: [

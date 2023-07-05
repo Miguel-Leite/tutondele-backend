@@ -14,7 +14,7 @@ export class PrismaPaymentServiceMonthlyRepository
   async findById(id: string): Promise<PaymentServiceMonthly | null> {
     const paymentServiceMonthly =
       await this.prisma.paymentServicesMonthlys.findFirst({
-        where: { id },
+        where: { id, removed: null },
       });
 
     if (!paymentServiceMonthly) {
@@ -28,7 +28,7 @@ export class PrismaPaymentServiceMonthlyRepository
   ): Promise<PaymentServiceMonthly | null> {
     const paymentServiceMonthly =
       await this.prisma.paymentServicesMonthlys.findFirst({
-        where: { reference },
+        where: { reference, removed: null },
       });
 
     if (!paymentServiceMonthly) {

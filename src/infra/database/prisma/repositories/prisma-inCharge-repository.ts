@@ -1,8 +1,8 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "../prisma.service";
-import { InChargeRepository } from "@app/repositories/inCharge-repository";
-import { InCharge } from "@app/entities/inCharge";
-import { PrismaInChargeMapper } from "../mappers/prisma-inCharge-mapper";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma.service';
+import { InChargeRepository } from '@app/repositories/inCharge-repository';
+import { InCharge } from '@app/entities/inCharge';
+import { PrismaInChargeMapper } from '../mappers/prisma-inCharge-mapper';
 
 @Injectable()
 export class PrismaInChargeRepository implements InChargeRepository {
@@ -10,7 +10,7 @@ export class PrismaInChargeRepository implements InChargeRepository {
 
   async findById(id: string): Promise<InCharge | null> {
     const inCharge = await this.prisma.inCharges.findFirst({
-      where: { id },
+      where: { id, removed: null },
     });
     if (!inCharge) {
       return null;
@@ -19,7 +19,7 @@ export class PrismaInChargeRepository implements InChargeRepository {
   }
   async findAll(organizationsId: string): Promise<InCharge[] | null> {
     const inCharges = await this.prisma.inCharges.findMany({
-      where: { organizationsId },
+      where: { organizationsId, removed: null },
     });
     return PrismaInChargeMapper.toDomainList(inCharges);
   }

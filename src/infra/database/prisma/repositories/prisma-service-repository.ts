@@ -12,7 +12,7 @@ export class PrismaServiceRepository implements ServiceRepository {
 
   async findById(id: string): Promise<Service | null> {
     const service = await this.prisma.services.findFirst({
-      where: { id },
+      where: { id, removed: null },
     });
 
     if (!service) {
@@ -34,7 +34,7 @@ export class PrismaServiceRepository implements ServiceRepository {
   }
   async findAll(organizationsId: string): Promise<Service[] | null> {
     const services = await this.prisma.services.findMany({
-      where: { organizationsId },
+      where: { organizationsId, removed: null },
     });
 
     return PrismaServiceMapper.toDomainList(services);

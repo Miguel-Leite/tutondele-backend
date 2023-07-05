@@ -14,7 +14,7 @@ export class PrismaServiceMonthlyRepository
 
   async findById(id: string): Promise<ServiceMonthly | null> {
     const service = await this.prisma.servicesMonthlys.findFirst({
-      where: { id },
+      where: { id, removed: null },
     });
 
     if (!service) {
@@ -36,7 +36,10 @@ export class PrismaServiceMonthlyRepository
   }
   async findAll(organizationsId: string): Promise<ServiceMonthly[] | null> {
     const services = await this.prisma.servicesMonthlys.findMany({
-      where: { organizationsId },
+      where: {
+        organizationsId,
+        removed: null,
+      },
     });
 
     return PrismaServiceMonthlyMapper.toDomainList(services);
@@ -47,7 +50,7 @@ export class PrismaServiceMonthlyRepository
     });
   }
   async save(serviceMonthly: ServiceMonthly): Promise<void> {
-    await this.prisma.servicesMonthlys.update({
+    await this.prisma.servicesMonthlys.updateMany({
       where: { id: serviceMonthly.id },
       data: PrismaServiceMonthlyMapper.toPrisma(serviceMonthly),
     });

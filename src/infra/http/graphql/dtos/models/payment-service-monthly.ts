@@ -15,6 +15,9 @@ export class PaymentServiceMonthlyModel {
   servicesMonthlysId!: string;
 
   @Field()
+  code!: string;
+
+  @Field()
   studentsId!: string;
 
   @Field()

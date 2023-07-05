@@ -11,7 +11,7 @@ export class PrismaPackageRepository implements PackageRepository {
 
   async findById(id: string): Promise<Package | null> {
     const packag = await this.prisma.packages.findFirst({
-      where: { id },
+      where: { id, removed: null },
     });
     if (!packag) {
       return null;
@@ -20,7 +20,7 @@ export class PrismaPackageRepository implements PackageRepository {
   }
   async findByName(name: string): Promise<Package | null> {
     const packag = await this.prisma.packages.findFirst({
-      where: { name },
+      where: { name, removed: null },
     });
     if (!packag) {
       return null;
@@ -33,7 +33,7 @@ export class PrismaPackageRepository implements PackageRepository {
   }
   async totalStudents(id: string): Promise<number | null> {
     const totalStudents = await this.prisma.packages.findFirst({
-      where: { id },
+      where: { id, removed: null },
     });
 
     if (!totalStudents) {
@@ -44,7 +44,7 @@ export class PrismaPackageRepository implements PackageRepository {
   }
   async totalServices(id: string): Promise<number | null> {
     const totalServices = await this.prisma.packages.findFirst({
-      where: { id },
+      where: { id, removed: null },
     });
 
     if (!totalServices) {
@@ -55,7 +55,7 @@ export class PrismaPackageRepository implements PackageRepository {
   }
   async totalUsers(id: string): Promise<number | null> {
     const totalUsers = await this.prisma.packages.findFirst({
-      where: { id },
+      where: { id, removed: null },
     });
 
     if (!totalUsers) {
@@ -66,7 +66,7 @@ export class PrismaPackageRepository implements PackageRepository {
   }
   async totalAdmins(id: string): Promise<number | null> {
     const totalAdmins = await this.prisma.packages.findFirst({
-      where: { id },
+      where: { id, removed: null },
     });
 
     if (!totalAdmins) {

@@ -1,4 +1,4 @@
-import { InCharge } from "@app/entities/inCharge";
+import { InCharge } from '@app/entities/inCharge';
 
 export abstract class InChargeRepository {
   abstract findById(id: string): Promise<InCharge | null>;

@@ -9,13 +9,16 @@ export class PrismaOrganizationRepository implements OrganizationRepository {
   constructor(private prisma: PrismaService) {}
 
   async findAll(): Promise<Organization[]> {
-    const organizations = await this.prisma.organizations.findMany();
+    const organizations = await this.prisma.organizations.findMany({
+      where: { removed: null },
+    });
     return PrismaOrganizationMapper.toDomainList(organizations);
   }
   async findById(organizationsId: string): Promise<Organization | null> {
     const organization = await this.prisma.organizations.findFirst({
       where: {
         id: organizationsId,
+        removed: null,
       },
     });
 

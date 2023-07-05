@@ -1,10 +1,10 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable } from '@nestjs/common';
 
-import { CustomerRepository } from "@app/repositories/customer-repository";
-import { Customer } from "@app/entities/customer";
+import { CustomerRepository } from '@app/repositories/customer-repository';
+import { Customer } from '@app/entities/customer';
 
-import { PrismaService } from "../prisma.service";
-import { PrismaCustomerMapper } from "../mappers/prisma-customer-mapper";
+import { PrismaService } from '../prisma.service';
+import { PrismaCustomerMapper } from '../mappers/prisma-customer-mapper';
 
 @Injectable()
 export class PrismaCustomerRepository implements CustomerRepository {
@@ -18,28 +18,28 @@ export class PrismaCustomerRepository implements CustomerRepository {
   }
   async findById(customerId: string): Promise<Customer | null> {
     const customer = await this.prisma.customers.findFirst({
-      where: { id: customerId },
+      where: { id: customerId, removed: null },
     });
-  
+
     if (!customer) {
       return null;
     }
-  
+
     return PrismaCustomerMapper.toDomain(customer);
   }
   async findByEmail(email: string): Promise<Customer | null> {
     const customer = await this.prisma.customers.findFirst({
       where: {
         persons: {
-          email
-        }
+          email,
+        },
       },
     });
-  
+
     if (!customer) {
       return null;
     }
-  
+
     return PrismaCustomerMapper.toDomain(customer);
   }
   async create(customer: Customer): Promise<void> {

@@ -180,6 +180,7 @@ type ServiceMonthlyModel {
 type PaymentServiceMonthlyModel {
   id: ID!
   servicesMonthlysId: String!
+  code: String!
   studentsId: String!
   iban: String!
   account_number: String!

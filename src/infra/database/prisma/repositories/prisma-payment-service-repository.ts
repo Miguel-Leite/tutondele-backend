@@ -13,7 +13,7 @@ export class PrismaPaymentServiceRepository
 
   async findById(id: string): Promise<PaymentService | null> {
     const paymentService = await this.prisma.paymentServices.findFirst({
-      where: { id },
+      where: { id, removed: null },
     });
 
     if (!paymentService) {
@@ -27,6 +27,7 @@ export class PrismaPaymentServiceRepository
       {
         where: {
           organizationsId,
+          removed: null,
         },
       },
     );

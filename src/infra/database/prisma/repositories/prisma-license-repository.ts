@@ -11,7 +11,7 @@ export class PrismaLicenseRepository implements LicenseRepository {
 
   async findById(id: string): Promise<License | null> {
     const license = await this.prisma.licenses.findFirst({
-      where: { id },
+      where: { id, removed: null },
     });
 
     if (!license) {
@@ -32,7 +32,11 @@ export class PrismaLicenseRepository implements LicenseRepository {
     return PrismaLicenseMapper.toDomain(license);
   }
   async findAll(): Promise<License[]> {
-    const licenses = await this.prisma.licenses.findMany();
+    const licenses = await this.prisma.licenses.findMany({
+      where: {
+        removed: null,
+      },
+    });
     return PrismaLicenseMapper.toDomainList(licenses);
   }
   async create(license: License): Promise<void> {

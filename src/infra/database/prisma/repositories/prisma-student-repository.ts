@@ -10,7 +10,7 @@ export class PrismaStudentRepository implements StudentRepository {
 
   async findById(id: string): Promise<Student | null> {
     const student = await this.prisma.students.findFirst({
-      where: { id },
+      where: { id, removed: null },
     });
 
     if (!student) {
@@ -23,6 +23,7 @@ export class PrismaStudentRepository implements StudentRepository {
     const students = await this.prisma.students.findMany({
       where: {
         organizationsId,
+        removed: null,
       },
     });
     return PrismaStudentMapper.toDomainList(students);

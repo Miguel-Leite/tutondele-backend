@@ -11,7 +11,7 @@ export class PrismaPaymentRepository implements PaymentRepository {
 
   async findById(id: string): Promise<Payment | null> {
     const payment = await this.prisma.payments.findFirst({
-      where: { id },
+      where: { id, removed: null },
     });
 
     if (!payment) {
@@ -24,6 +24,7 @@ export class PrismaPaymentRepository implements PaymentRepository {
     const paymentsServicesMonthlys = await this.prisma.payments.findMany({
       where: {
         organizationsId,
+        removed: null,
       },
     });
 

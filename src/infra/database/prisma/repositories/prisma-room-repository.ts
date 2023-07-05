@@ -9,7 +9,7 @@ export class PrismaRoomRepository implements RoomRepository {
   constructor(private prisma: PrismaService) {}
   async findById(id: string): Promise<Room | null> {
     const room = await this.prisma.rooms.findFirst({
-      where: { id },
+      where: { id, removed: null },
     });
     if (!room) {
       return null;
@@ -38,7 +38,7 @@ export class PrismaRoomRepository implements RoomRepository {
   }
   async findAll(organizationsId: string): Promise<Room[] | null> {
     const rooms = await this.prisma.rooms.findMany({
-      where: { organizationsId },
+      where: { organizationsId, removed: null },
     });
     return PrismaRoomMapper.toDomainList(rooms);
   }

@@ -573,6 +573,7 @@ model PaymentServices {
 
   value  Float
   status Status? @default(PENDING)
+  code String
 
   removed DateTime?
 

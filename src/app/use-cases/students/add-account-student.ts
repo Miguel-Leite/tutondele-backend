@@ -6,6 +6,7 @@ import { PersonRepository } from '@app/repositories/person-repository';
 import { Username } from '@app/entities/username';
 import { hash } from 'bcryptjs';
 import { CustomerRepository } from '@app/repositories/customer-repository';
+import { Student } from '@app/entities/student';
 
 interface AddAccountStudentResponse {
   customer: Customer | null;
@@ -20,13 +21,21 @@ export class AddAccountStudent {
   ) {}
 
   async execute(id: string): Promise<AddAccountStudentResponse> {
-    const student = await this.studentRepository.findById(id);
+    const studentExists = await this.studentRepository.findById(id);
 
-    if (!student) {
+    if (!studentExists) {
       throw new StudentNotFound();
     }
 
-    const person = await this.personRepository.findById(student.personsId);
+    if (studentExists.customersId) {
+      throw new Error(
+        'Este estudante já está associado a uma conta no sistema. Se você prosseguir, a associação existente será substituída pela nova associação com a conta atual. Certifique-se de que deseja realizar essa alteração.',
+      );
+    }
+
+    const person = await this.personRepository.findById(
+      studentExists.personsId,
+    );
 
     if (!person) {
       throw new StudentNotFound();
@@ -47,10 +56,20 @@ export class AddAccountStudent {
       password: hashPassword,
       acceptTermsAndConditions: true,
       verified: true,
-      organizationsId: student.organizationsId,
+      organizationsId: studentExists.organizationsId,
     });
 
-    await this.customerRepository.create(customer);
+    const student = new Student({
+      personsId: studentExists.personsId,
+      roomsId: studentExists.roomsId,
+      organizationsId: studentExists.organizationsId,
+      customersId: customer.id,
+    });
+
+    Promise.all([
+      await this.customerRepository.create(customer),
+      await this.studentRepository.save(student),
+    ]);
 
     return {
       customer,

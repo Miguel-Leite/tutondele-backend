@@ -90,7 +90,7 @@ export class StudentsResolver {
 
   @UseGuards(AuthGuard)
   @Mutation(() => StudentModel)
-  async createAccount(@Args('id') id: string) {
+  async createStudentAccount(@Args('id') id: string) {
     const { customer } = await this.addAccountStudent.execute(id);
     return customer;
   }

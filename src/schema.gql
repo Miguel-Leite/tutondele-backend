@@ -274,7 +274,7 @@ type Mutation {
   disableOrganization(id: String!): OrganizationModel!
   deleteOrganization(id: String!): OrganizationModel!
   addStudent(data: CreateStudentInput!): StudentModel!
-  createAccount(id: String!): StudentModel!
+  createStudentAccount(id: String!): StudentModel!
   addRoom(data: CreateRoomInput!): RoomModel!
   editRoom(data: UpdateRoomInput!): RoomModel!
   deleteRoom(id: String!): RoomModel!

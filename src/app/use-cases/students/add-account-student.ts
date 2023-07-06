@@ -51,7 +51,7 @@ export class AddAccountStudent {
 
     const customer = new Customer({
       username: username.value,
-      personsId: person.id,
+      personsId: studentExists.personsId,
       level: 'STUDENT',
       password: hashPassword,
       acceptTermsAndConditions: true,

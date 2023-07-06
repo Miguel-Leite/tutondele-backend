@@ -7,7 +7,7 @@ export class PrismaStudentMapper {
       id: student.id,
       personsId: student.personsId,
       roomsId: student.roomsId,
-      usersId: student.customersId,
+      customersId: student.customersId,
       organizationsId: student.organizationsId,
       removed: student.removed,
     };

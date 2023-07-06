@@ -211,6 +211,20 @@ type TuitionPaymentModel {
   updated_at: DateTime
 }
 
+type PaymentServiceModel {
+  id: ID!
+  servicesId: String!
+  studentsId: String!
+  code: String!
+  status: Status!
+  value: Float!
+  removed: DateTime
+  created_at: DateTime!
+  updated_at: DateTime!
+  student: StudentModel!
+  service: ServiceModel!
+}
+
 type Query {
   identity(bi: String!): IdentityModel!
   packages: [PackageModel!]!
@@ -234,6 +248,8 @@ type Query {
   serviceMonthly(id: String!): ServiceMonthlyModel!
   paymentsServicesMonthlys: [PaymentServiceMonthlyModel!]!
   paymentServiceMonthly(id: String!): PaymentServiceMonthlyModel!
+  paymentsServices: [PaymentServiceModel!]!
+  paymentService(id: String!): PaymentServiceModel!
 }
 
 type Mutation {
@@ -275,6 +291,12 @@ type Mutation {
   approvedPaymentServiceMonthly(id: String!): PaymentServiceMonthlyModel!
   canceledPaymentServiceMonthly(id: String!): PaymentServiceMonthlyModel!
   pendingPaymentServiceMonthly(id: String!): PaymentServiceMonthlyModel!
+  addPaymentService(data: CreatePaymentServiceInput!): PaymentServiceModel!
+  editPaymentService(data: UpdatePaymentServiceInput!): PaymentServiceModel!
+  deletePaymentService(id: String!): PaymentServiceModel!
+  approvedPaymentService(id: String!): PaymentServiceModel!
+  canceledPaymentService(id: String!): PaymentServiceModel!
+  pendingPaymentService(id: String!): PaymentServiceModel!
   addTuitionPayment(data: CreateTuitionPaymentInput!): TuitionPaymentModel!
 }
 
@@ -480,6 +502,19 @@ input UpdatePaymentServiceMonthlyInput {
   iban: String
   account_number: String
   reference: String
+  value: Float
+}
+
+input CreatePaymentServiceInput {
+  servicesId: String!
+  studentsId: String!
+  value: Float!
+}
+
+input UpdatePaymentServiceInput {
+  id: ID!
+  servicesId: String
+  studentsId: String
   value: Float
 }
 

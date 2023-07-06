@@ -98,6 +98,9 @@ import { CanceledPaymentServiceMonthly } from '@app/use-cases/paymentServicesMon
 import { PendingPaymentServiceMonthly } from '@app/use-cases/paymentServicesMonthlys/pending-payment-service-monthly';
 import { CreateTuitionPayment } from '@app/use-cases/tuitionPayments/create-tuition-payment';
 import { TuitionPaymentResolver } from './graphql/resolvers/tuition-payment.resolver';
+import { PaymentServicesResolver } from './graphql/resolvers/payment-services.resolver';
+import { GetAllPaymentsServices } from '@app/use-cases/paymentServices/get-all-payments-services';
+import { RemovePaymentService } from '@app/use-cases/paymentServices/remove-payment-service';
 
 @Module({
   imports: [
@@ -202,7 +205,9 @@ import { TuitionPaymentResolver } from './graphql/resolvers/tuition-payment.reso
     CreatePaymentService,
     UpdatePaymentService,
     GetByIdPaymentService,
-    GetAllPaymentsServicesMonthlys,
+    GetAllPaymentsServices,
+    RemovePaymentService,
+    PaymentServicesResolver,
     CreateTuitionPayment,
     TuitionPaymentResolver,
   ],

@@ -25,6 +25,7 @@ import { AuthGuard } from '@infra/http/auth/auth.guard';
 import { PersonModel } from '../dtos/models/person-model';
 import { CreateStudentInput } from '../dtos/inputs/create-student-input';
 import { RoomModel } from '../dtos/models/room-model';
+import { AddAccountStudent } from '@app/use-cases/students/add-account-student';
 
 @Resolver(() => StudentModel)
 export class StudentsResolver {
@@ -35,6 +36,7 @@ export class StudentsResolver {
     private getByIdPerson: GetByIdPerson,
     private getByIdRoom: GetByIdRoom,
     private getByIdCustomer: GetByIdCustomer,
+    private addAccountStudent: AddAccountStudent,
   ) {}
 
   @UseGuards(AuthGuard)
@@ -84,5 +86,12 @@ export class StudentsResolver {
       ...data,
     });
     return student;
+  }
+
+  @UseGuards(AuthGuard)
+  @Mutation(() => StudentModel)
+  async createAccount(@Args('id') id: string) {
+    const { customer } = await this.addAccountStudent.execute(id);
+    return customer;
   }
 }

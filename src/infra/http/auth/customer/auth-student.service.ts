@@ -5,17 +5,17 @@ import { compare } from 'bcryptjs';
 import { CustomerRepository } from '@app/repositories/customer-repository';
 import { OrganizationRepository } from '@app/repositories/organization-repository';
 
-interface AuthCustomerServiceRequest {
+interface AuthStudentServiceRequest {
   email: string;
   password: string;
 }
 
-export interface AuthCustomerServiceResponse {
+export interface AuthStudentServiceResponse {
   access_token: string;
 }
 
 @Injectable()
-export class AuthCustomerService {
+export class AuthStudentService {
   constructor(
     private customerRepository: CustomerRepository,
     private organizationRepository: OrganizationRepository,
@@ -25,7 +25,7 @@ export class AuthCustomerService {
   async execute({
     email,
     password,
-  }: AuthCustomerServiceRequest): Promise<string> {
+  }: AuthStudentServiceRequest): Promise<string> {
     const customer = await this.customerRepository.findByEmail(email);
 
     if (!customer) {
@@ -42,7 +42,7 @@ export class AuthCustomerService {
       throw new UnauthorizedException();
     }
 
-    if (customer.level === 'STUDENT' || customer.level === 'MASTER') {
+    if (customer.level !== 'STUDENT') {
       throw new UnauthorizedException();
     }
 

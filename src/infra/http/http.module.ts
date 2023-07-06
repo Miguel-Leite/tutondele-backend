@@ -101,6 +101,7 @@ import { TuitionPaymentResolver } from './graphql/resolvers/tuition-payment.reso
 import { PaymentServicesResolver } from './graphql/resolvers/payment-services.resolver';
 import { GetAllPaymentsServices } from '@app/use-cases/paymentServices/get-all-payments-services';
 import { RemovePaymentService } from '@app/use-cases/paymentServices/remove-payment-service';
+import { AddAccountStudent } from '@app/use-cases/students/add-account-student';
 
 @Module({
   imports: [
@@ -146,6 +147,7 @@ import { RemovePaymentService } from '@app/use-cases/paymentServices/remove-paym
     StudentsResolver,
     GetByIdPerson,
     GetAllStudents,
+    AddAccountStudent,
     CreateStudent,
     UpdateStudent,
     GetByIdStudent,

@@ -263,6 +263,7 @@ type Mutation {
   addUser(data: CreateUserInput!): UserModel!
   deleteUser(id: String!): UserModel!
   authenticationCustomer(data: AuthCustomerInput!): String!
+  authenticationStudent(data: AuthCustomerInput!): String!
   addCustomer(data: CreateCustomerInput!): CustomerModel!
   editCustomer(data: UpdateCustomerInput!): CustomerModel!
   deleteCustomer(id: String!): CustomerModel!
@@ -273,6 +274,7 @@ type Mutation {
   disableOrganization(id: String!): OrganizationModel!
   deleteOrganization(id: String!): OrganizationModel!
   addStudent(data: CreateStudentInput!): StudentModel!
+  createAccount(id: String!): StudentModel!
   addRoom(data: CreateRoomInput!): RoomModel!
   editRoom(data: UpdateRoomInput!): RoomModel!
   deleteRoom(id: String!): RoomModel!

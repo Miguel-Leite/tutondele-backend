@@ -17,6 +17,7 @@ import {
   IAuthCustomer,
 } from '@infra/http/auth/customer/current-customer';
 import { UpdateCustomerInput } from '../dtos/inputs/update-customer-input';
+import { AuthStudentService } from '@infra/http/auth/customer/auth-student.service';
 
 @Resolver(() => UserModel)
 export class CustomersResolver {
@@ -28,6 +29,7 @@ export class CustomersResolver {
     private removeCustomer: RemoveCustomer,
     private retrieveCustomer: RetrieveCustomer,
     private authCustomerService: AuthCustomerService,
+    private authStudentService: AuthStudentService,
   ) {}
 
   @UseGuards(AuthGuard)
@@ -56,6 +58,11 @@ export class CustomersResolver {
   @Mutation(() => String)
   async authenticationCustomer(@Args('data') data: AuthCustomerInput) {
     return await this.authCustomerService.execute(data);
+  }
+
+  @Mutation(() => String)
+  async authenticationStudent(@Args('data') data: AuthCustomerInput) {
+    return await this.authStudentService.execute(data);
   }
 
   @UseGuards(AuthGuard)

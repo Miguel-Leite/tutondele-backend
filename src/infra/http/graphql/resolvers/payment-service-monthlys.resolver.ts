@@ -29,6 +29,7 @@ import { ServiceMonthlyModel } from '../dtos/models/service-monthly-model';
 import { ApprovedPaymentServiceMonthly } from '@app/use-cases/paymentServicesMonthlys/approved-payment-service-monthly';
 import { CanceledPaymentServiceMonthly } from '@app/use-cases/paymentServicesMonthlys/canceled-payment-service-monthly';
 import { PendingPaymentServiceMonthly } from '@app/use-cases/paymentServicesMonthlys/pending-payment-service-monthly';
+import { CreatePaymentServiceMonthlyPersonalized } from '@app/use-cases/paymentServicesMonthlys/create-payment-service-monthly-personalized';
 
 @Resolver(() => PaymentServiceMonthlyModel)
 export class PaymentServiceMonthlysResolver {
@@ -36,6 +37,7 @@ export class PaymentServiceMonthlysResolver {
     private getAllPaymentsServicesMonthlys: GetAllPaymentsServicesMonthlys,
     private getByIdPaymentServiceMonthly: GetByIdPaymentServiceMonthly,
     private createPaymentServiceMonthly: CreatePaymentServiceMonthly,
+    private createPaymentServiceMonthlyPersonalized: CreatePaymentServiceMonthlyPersonalized,
     private updatePaymentServiceMonthly: UpdatePaymentServiceMonthly,
     private removePaymentServiceMonthly: RemovePaymentServiceMonthly,
     private getByIdStudent: GetByIdStudent,
@@ -89,6 +91,20 @@ export class PaymentServiceMonthlysResolver {
   ) {
     const { paymentServiceMonthly } =
       await this.createPaymentServiceMonthly.execute({
+        organizationsId: customer.organizationsId,
+        ...data,
+      });
+    return paymentServiceMonthly;
+  }
+
+  @UseGuards(AuthGuard)
+  @Mutation(() => PaymentServiceMonthlyModel)
+  async addPaymentServiceMonthlyPersonalized(
+    @Args('data') data: CreatePaymentServiceMonthlyInput,
+    @CurrentCustomer() customer: IAuthCustomer,
+  ) {
+    const { paymentServiceMonthly } =
+      await this.createPaymentServiceMonthlyPersonalized.execute({
         organizationsId: customer.organizationsId,
         ...data,
       });

@@ -1,3 +1,4 @@
+import { generateCode } from '@helpers/generate-code';
 import { PaymentService } from './payment-service';
 
 describe('Payment Services', () => {
@@ -8,6 +9,7 @@ describe('Payment Services', () => {
       organizationsId: 'example-organizations-id',
       status: 'PENDING',
       value: 32000,
+      code: generateCode(10),
     });
     expect(paymentService).toBeTruthy();
   });

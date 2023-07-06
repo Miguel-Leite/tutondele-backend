@@ -7,6 +7,7 @@ import { ServiceNotFound } from '../services/errors/service-not-found';
 import { StudentRepository } from '@app/repositories/student-repository';
 import { StudentNotFound } from '../students/errors/student-not-found';
 import { PaymentServiceNotFound } from './errors/payment-service-not-found';
+import { generateCode } from '@helpers/generate-code';
 
 interface UpdatePaymentServiceRequest {
   id: string;
@@ -40,6 +41,7 @@ export class UpdatePaymentService {
         studentsId,
         value,
         status: 'APPROVED',
+        code: generateCode(10),
       },
       id,
     );

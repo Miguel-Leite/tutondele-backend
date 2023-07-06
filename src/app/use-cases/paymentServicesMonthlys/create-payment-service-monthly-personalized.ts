@@ -68,7 +68,7 @@ export class CreatePaymentServiceMonthlyPersonalized {
       value,
       status: 'PENDING',
     });
-
+    console.log(paymentServiceMonthly.status);
     await this.paymentServiceMonthlyRepository.create(paymentServiceMonthly);
 
     return {

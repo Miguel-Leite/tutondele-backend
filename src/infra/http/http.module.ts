@@ -102,6 +102,7 @@ import { PaymentServicesResolver } from './graphql/resolvers/payment-services.re
 import { GetAllPaymentsServices } from '@app/use-cases/paymentServices/get-all-payments-services';
 import { RemovePaymentService } from '@app/use-cases/paymentServices/remove-payment-service';
 import { AddAccountStudent } from '@app/use-cases/students/add-account-student';
+import { CreatePaymentServiceMonthlyPersonalized } from '@app/use-cases/paymentServicesMonthlys/create-payment-service-monthly-personalized';
 
 @Module({
   imports: [
@@ -212,6 +213,7 @@ import { AddAccountStudent } from '@app/use-cases/students/add-account-student';
     PaymentServicesResolver,
     CreateTuitionPayment,
     TuitionPaymentResolver,
+    CreatePaymentServiceMonthlyPersonalized,
   ],
 })
 export class HttpModule {}

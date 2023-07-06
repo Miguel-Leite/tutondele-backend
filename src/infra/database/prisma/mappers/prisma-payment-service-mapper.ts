@@ -10,6 +10,7 @@ export class PrismaPaymentServiceMapper {
       studentsId: paymentService.studentsId,
       status: paymentService.status,
       value: paymentService.value,
+      code: paymentService.code,
     };
   }
 
@@ -21,6 +22,7 @@ export class PrismaPaymentServiceMapper {
         studentsId: raw.studentsId,
         status: raw.status,
         value: raw.value,
+        code: raw.code,
       },
       raw.id,
     );

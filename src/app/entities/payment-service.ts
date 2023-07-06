@@ -7,6 +7,7 @@ export interface PaymentServicesProps {
   studentsId: string;
   servicesId: string;
   organizationsId: string;
+  code: string;
   value: number;
   status: Status | null;
   removed?: Date | null;
@@ -53,6 +54,14 @@ export class PaymentService {
 
   public get organizationsId(): string {
     return this.props.organizationsId;
+  }
+
+  public set code(code: string) {
+    this.props.code = code;
+  }
+
+  public get code(): string {
+    return this.props.code.toUpperCase();
   }
 
   public set value(value: number) {

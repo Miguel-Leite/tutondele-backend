@@ -3,8 +3,11 @@ import { Injectable } from '@nestjs/common';
 import { PaymentService } from '@app/entities/payment-service';
 import { PaymentServiceRepository } from '@app/repositories/payment-service-repository';
 import { ServiceRepository } from '@app/repositories/service-repository';
-import { ServiceNotFound } from '../services/errors/service-not-found';
 import { StudentRepository } from '@app/repositories/student-repository';
+
+import { generateCode } from '@helpers/generate-code';
+
+import { ServiceNotFound } from '../services/errors/service-not-found';
 import { StudentNotFound } from '../students/errors/student-not-found';
 
 interface CreatePaymentServiceRequest {
@@ -37,6 +40,7 @@ export class CreatePaymentService {
       studentsId,
       value,
       status: 'APPROVED',
+      code: generateCode(10),
     });
 
     const serviceExists = await this.serviceRepository.findById(servicesId);

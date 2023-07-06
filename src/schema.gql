@@ -288,6 +288,7 @@ type Mutation {
   editServiceMonthly(data: UpdateServiceMonthlyInput!): ServiceMonthlyModel!
   deleteServiceMonthly(id: String!): ServiceMonthlyModel!
   addPaymentServiceMonthly(data: CreatePaymentServiceMonthlyInput!): PaymentServiceMonthlyModel!
+  addPaymentServiceMonthlyPersonalized(data: CreatePaymentServiceMonthlyInput!): PaymentServiceMonthlyModel!
   editPaymentServiceMonthly(data: UpdatePaymentServiceMonthlyInput!): PaymentServiceMonthlyModel!
   deletePaymentServiceMonthly(id: String!): PaymentServiceMonthlyModel!
   approvedPaymentServiceMonthly(id: String!): PaymentServiceMonthlyModel!
